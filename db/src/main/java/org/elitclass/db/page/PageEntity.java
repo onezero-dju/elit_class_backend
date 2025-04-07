@@ -1,34 +1,31 @@
-package org.elitclass.db.user;
+package org.elitclass.db.page;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.elitclass.db.BaseEntity;
-import org.elitclass.db.user.enums.UserStatus;
 
-@Table(name= "user")
+@Table(name= "page")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class UserEntity extends BaseEntity {
+public class PageEntity extends BaseEntity {
+
+    @Column(nullable = false)
+    private Boolean isQuiz;
 
     @Column(length = 50,nullable = false)
-    private String classTitle;
+    private String title;
 
     @Column(nullable = false)
-    private Long userId;
+    private String context;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserStatus status;
-
-    private boolean isPremium;
-
-    private Long like;
-
-    private Long views;
+    private Long lectureId;
 }

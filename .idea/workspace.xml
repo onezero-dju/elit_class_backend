@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/BadgeStoreEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/ClassEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/InterestCategoryEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/LectureEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/PageEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/RuleEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/UserBadgeEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/UserEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/UserInterestEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/entity/UserRuleEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/enums/ClassStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/enums/UserStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/BadgeStoreRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/ClassRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/InterestCategoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/LectureRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/PageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/RuleRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/UserBadgeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/UserInterestRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/repository/UserRuleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/ApiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/ApiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/api/Api.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/api/Api.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/api/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/api/Result.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/Jpa/JpaConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/Jpa/JpaConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/objectmapper/ObjectMapperConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/objectmapper/ObjectMapperConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/swagger/SwaggerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/swagger/SwaggerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/error/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/error/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/error/ErrorCodeIfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/error/ErrorCodeIfs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/ApiException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/ApiException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/ApiExceptionIfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/ApiExceptionIfs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exceptionhandler/ApiExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exceptionhandler/ApiExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exceptionhandler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exceptionhandler/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/enums/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/enums/UserStatus.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/db">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="api" type="2d1252cf:ModuleNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Exception" />
+        <option value="com.intellij.jpb.JpaEntity" />
+        <option value="Enum" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;blissyou&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/onezero-dju/elit_class_backend&quot;,
+    &quot;accountId&quot;: &quot;1ef8de67-8cbe-41e7-afcd-61bb0372fbfe&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2vD9JzEAP7WjepSJ4EFpY5avLno" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Gradle./Users/choewonhyeong/Desktop/elitclass.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [bootJar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [jar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [test].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass 빌드.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;exception&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/choewonhyeong/Desktop/elitclass/db/src/main/java/org/elitclass/db&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/db/src/main/java/org/elitclass/db" />
+      <recent name="$PROJECT_DIR$/db/src/main/java" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ApiApplication">
+    <configuration name="/Users/choewonhyeong/Desktop/elitclass" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="elitclass [bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="bootJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="elitclass [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="elitclass [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="ApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="elitclass.api.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.elitclass.api.ApiApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.elitclass.api.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ApiApplication" />
+        <item itemvalue="Gradle.elitclass [jar]" />
+        <item itemvalue="Gradle.elitclass [bootJar]" />
+        <item itemvalue="Gradle./Users/choewonhyeong/Desktop/elitclass" />
+        <item itemvalue="Gradle.elitclass [test]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="" />
+      <created>1743668710738</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1743668710738</updated>
+      <workItem from="1743668712597" duration="2692000" />
+      <workItem from="1743921315658" duration="4205000" />
+      <workItem from="1743937292920" duration="768000" />
+      <workItem from="1743938065930" duration="775000" />
+      <workItem from="1743938848161" duration="6484000" />
+      <workItem from="1743990971394" duration="3734000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

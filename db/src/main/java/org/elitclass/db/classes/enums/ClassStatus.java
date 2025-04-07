@@ -1,9 +1,9 @@
-package org.elitclass.db.user.enums;
+package org.elitclass.db.classes.enums;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum UserStatus {
+public enum ClassStatus {
     REGISTERED("등록"),
     UNREGISTERED("헤지");
 

@@ -1,4 +1,4 @@
-package org.elitclass.api.config;
+package org.elitclass.api.config.Jpa;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
