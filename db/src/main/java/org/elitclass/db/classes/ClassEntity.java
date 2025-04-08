@@ -21,7 +21,7 @@ public class ClassEntity extends BaseEntity {
     private String classTitle;
 
     @Column(nullable = false)
-    private Long user;
+    private Long userId;
 
     @Column(nullable = false)
     private Boolean isPremium;

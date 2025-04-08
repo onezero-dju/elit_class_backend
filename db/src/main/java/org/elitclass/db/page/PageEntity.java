@@ -18,7 +18,7 @@ import org.elitclass.db.BaseEntity;
 public class PageEntity extends BaseEntity {
 
     @Column(nullable = false)
-    private Boolean isQuiz;
+    private String pageType;
 
     @Column(length = 50,nullable = false)
     private String title;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.elitclass.db.BaseEntity;
 
-@Table(name= "class")
+@Table(name= "user_interest")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.elitclass.db.BaseEntity;
 
-@Table(name= "class")
+@Table(name= "user_badge")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,5 +24,5 @@ public class UserBadgeEntity extends BaseEntity {
     private Long userId;
 
     @Column(nullable = false)
-    private Boolean isView;
+    private String isView;
 }

@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/filter/LoggerFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/enums/userIsCertified.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a204bce8-7882-475f-9a10-621625056918.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a204bce8-7882-475f-9a10-621625056918.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/rule/RuleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/rule/RuleEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userbadge/UserBadgeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userbadge/UserBadgeEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userinterest/UserInterestEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userinterest/UserInterestEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userrule/UserRuleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userrule/UserRuleEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,9 +59,9 @@
       <list>
         <option value="Exception" />
         <option value="com.intellij.jpb.JpaEntity" />
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -85,35 +93,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Gradle./Users/choewonhyeong/Desktop/elitclass.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.elitclass [bootJar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.elitclass [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.elitclass [jar].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.elitclass [test].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.elitclass 빌드.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ApiApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;exception&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/choewonhyeong/Desktop/elitclass/db/src/main/java/org/elitclass/db&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Gradle./Users/choewonhyeong/Desktop/elitclass.executor": "Run",
+    "Gradle.elitclass [bootJar].executor": "Run",
+    "Gradle.elitclass [dependencies].executor": "Run",
+    "Gradle.elitclass [jar].executor": "Run",
+    "Gradle.elitclass [test].executor": "Run",
+    "Gradle.elitclass 빌드.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.ApiApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/choewonhyeong/Desktop/elitclass/db/src/main/java/org/elitclass/db",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "모듈",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/db/src/main/java/org/elitclass/db" />

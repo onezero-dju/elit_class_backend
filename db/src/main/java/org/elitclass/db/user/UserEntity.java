@@ -16,19 +16,20 @@ import org.elitclass.db.user.enums.UserStatus;
 @SuperBuilder
 public class UserEntity extends BaseEntity {
 
+    @Column(length = 100,unique = true, nullable = false)
+    private String email;
+
+    @Column(length = 50,unique = true, nullable = false)
+    private String nickname;
+
+    private String statusContext;
+
+    @Column(length = 100)
+    private String payment;
+
     @Column(length = 50,nullable = false)
-    private String classTitle;
+    private String isCertified;
 
-    @Column(nullable = false)
-    private Long userId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private UserStatus status;
-
-    private boolean isPremium;
-
-    private Long like;
-
-    private Long views;
+    @Column( nullable = false)
+    private Long classId;
 }
