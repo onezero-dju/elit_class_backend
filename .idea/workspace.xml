@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/enums/userIsCertified.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a204bce8-7882-475f-9a10-621625056918.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a204bce8-7882-475f-9a10-621625056918.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/docker/DockerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/redis/RedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/25__4__6___8_22__________1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/25__4__6__오후_8_22,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]1/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/rule/RuleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/rule/RuleEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userbadge/UserBadgeEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userbadge/UserBadgeEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userinterest/UserInterestEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userinterest/UserInterestEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userrule/UserRuleEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/userrule/UserRuleEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +32,9 @@
         <task path="$PROJECT_DIR$/db">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/api">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -45,7 +45,47 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="실행 구성" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
                 <item name="api" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="api" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="api" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="api" type="2d1252cf:ModuleNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="db" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="elitclass" type="f1a62948:ProjectNode" />
+                <item name="db" type="2d1252cf:ModuleNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
             </expand>
             <select />
@@ -60,8 +100,8 @@
         <option value="Exception" />
         <option value="com.intellij.jpb.JpaEntity" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -102,13 +142,14 @@
     "Gradle.elitclass [jar].executor": "Run",
     "Gradle.elitclass [test].executor": "Run",
     "Gradle.elitclass 빌드.executor": "Run",
+    "Gradle.elitclass:api [build].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.ApiApplication.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feat/dockerIDE",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/choewonhyeong/Desktop/elitclass/db/src/main/java/org/elitclass/db",
     "node.js.detected.package.eslint": "true",
@@ -131,7 +172,7 @@
       <recent name="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ApiApplication">
+  <component name="RunManager" selected="Gradle.elitclass:api [build]">
     <configuration name="/Users/choewonhyeong/Desktop/elitclass" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -196,10 +237,10 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="elitclass [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="elitclass:api [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -207,7 +248,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="test" />
+            <option value="build" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -233,11 +274,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.elitclass:api [build]" />
         <item itemvalue="Spring Boot.ApiApplication" />
         <item itemvalue="Gradle.elitclass [jar]" />
         <item itemvalue="Gradle.elitclass [bootJar]" />
         <item itemvalue="Gradle./Users/choewonhyeong/Desktop/elitclass" />
-        <item itemvalue="Gradle.elitclass [test]" />
       </list>
     </recent_temporary>
   </component>
@@ -264,6 +305,11 @@
       <workItem from="1743938848161" duration="6484000" />
       <workItem from="1743990971394" duration="5388000" />
       <workItem from="1744009965854" duration="904000" />
+      <workItem from="1744091177089" duration="485000" />
+      <workItem from="1744192884758" duration="2643000" />
+      <workItem from="1744266509541" duration="860000" />
+      <workItem from="1745528618738" duration="1872000" />
+      <workItem from="1745906786231" duration="1438000" />
     </task>
     <servers />
   </component>
