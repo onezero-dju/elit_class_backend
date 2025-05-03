@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.elitclass.db.BaseEntity;
 import org.elitclass.db.user.enums.UserStatus;
 
-@Table(name= "user")
+@Table(name= "users")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

@@ -26,7 +26,7 @@ public class ClassEntity extends BaseEntity {
     @Column(nullable = false)
     private Boolean isPremium;
 
-    private Long like;
+    private Long like_count;
 
     private Long views;
 

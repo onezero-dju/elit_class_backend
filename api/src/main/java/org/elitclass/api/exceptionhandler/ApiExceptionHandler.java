@@ -3,7 +3,7 @@ package org.elitclass.api.exceptionhandler;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.elitclass.api.api.Api;
-import org.elitclass.api.exception.ApiException;
+import org.elitclass.api.exception.api.ApiException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
