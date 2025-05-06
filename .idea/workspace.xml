@@ -5,22 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/model/AccessWebIdeRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/model/WebIdeCreateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/service/WebIdeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/docker/DockerOperationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/resources/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/25__4__6___8_22__________1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/25__4__6__오후_8_22,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]1/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/docker/DockerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/config/docker/DockerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/ApiException.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/api/ApiException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/ApiExceptionIfs.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exception/api/ApiExceptionIfs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exceptionhandler/ApiExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/exceptionhandler/ApiExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/model/AccessWebIdeRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/model/WebIdeCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/model/WebIdeCreateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/service/WebIdeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/service/WebIdeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/db/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +85,10 @@
     &quot;accountId&quot;: &quot;1ef8de67-8cbe-41e7-afcd-61bb0372fbfe&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -100,38 +97,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Gradle./Users/choewonhyeong/Desktop/elitclass.executor": "Run",
-    "Gradle.elitclass [bootJar].executor": "Run",
-    "Gradle.elitclass [dependencies].executor": "Run",
-    "Gradle.elitclass [jar].executor": "Run",
-    "Gradle.elitclass [test].executor": "Run",
-    "Gradle.elitclass 빌드.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.ApiApplication.executor": "Run",
-    "git-widget-placeholder": "feat/dockerIDE",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "/Users/choewonhyeong/Desktop/elitclass/api/src/main/java",
-    "last_opened_file_path": "/Users/choewonhyeong/Desktop/elitclass/db/src/main/java/org/elitclass/db",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "프로젝트",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "ml.llm.LLMProjectConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Gradle./Users/choewonhyeong/Desktop/elitclass.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [bootJar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [jar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass [test].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.elitclass 빌드.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/dockerIDE&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;/Users/choewonhyeong/Desktop/elitclass/api/src/main/java&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/choewonhyeong/Desktop/elitclass/db/src/main/java/org/elitclass/db&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;프로젝트&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMProjectConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.elitclass.api.domain.webide.model" />
@@ -143,6 +140,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide" />
       <recent name="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.elitclass.db.classes.model" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.ApiApplication">
@@ -278,6 +278,8 @@
       <workItem from="1743938848161" duration="6484000" />
       <workItem from="1743990971394" duration="5388000" />
       <workItem from="1744009965854" duration="904000" />
+      <workItem from="1746268168403" duration="5144000" />
+      <workItem from="1746430847692" duration="21577000" />
     </task>
     <servers />
   </component>

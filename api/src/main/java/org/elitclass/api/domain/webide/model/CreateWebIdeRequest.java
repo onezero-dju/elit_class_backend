@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class WebIdeCreateRequest {
-
-    private String language;
-
-    private String version;
-
+public class CreateWebIdeRequest {
     private Long userId;
 
+    private Long webIdeId;
+
+    private String language;
 }

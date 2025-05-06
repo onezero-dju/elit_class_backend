@@ -30,6 +30,10 @@ public class ClassEntity extends BaseEntity {
 
     private Long views;
 
+    private String Language;
+
+    private String Version;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ClassStatus status;
