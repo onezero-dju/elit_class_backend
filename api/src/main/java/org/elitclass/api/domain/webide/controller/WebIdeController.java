@@ -46,4 +46,12 @@ public class WebIdeController {
         var response = webIdeService.saveCode(request);
         return Api.OK(response);
     }
+    @PostMapping("/build")
+    public Api<WebIdeBuildResponse> build(
+            @Valid
+            @RequestBody String containerId
+    ){
+        var response = webIdeService.buildIde(containerId);
+        return Api.OK(response);
+    }
 }

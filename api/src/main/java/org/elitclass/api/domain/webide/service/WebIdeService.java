@@ -186,17 +186,35 @@ public class WebIdeService {
     //TODO: return 응답 개발
     public WebIdeBuildResponse buildIde(String containerId){
         containerId = containerId.replaceAll("^\"|\"$", "").trim();
-
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
         try{
-            String[] SourceCompilerCmd = {
+            String[] sourceCompilerCmd = {
                     "javac","/usr/src/Main.java",
             };
             String[] SourceBuildCmd = {"Java","/user/src/Main"};
             dockerClient.inspectContainerCmd(containerId).exec();
+            ExecCreateCmdResponse execCreateCmdResponse = dockerClient.execCreateCmd(containerId)
+                    .withAttachStdout(true)
+                    .withAttachStderr(true)
+                    .withCmd(sourceCompilerCmd)
+                    .withCmd(SourceBuildCmd)
+                    .exec();
 
+            // 명령 실행 + 결과 출력
+            dockerClient.execStartCmd(execCreateCmdResponse.getId())
+                    .exec(new ExecStartResultCallback(outputStream, errorStream))
+                    .awaitCompletion();
 
+            return WebIdeBuildResponse.builder()
+                    .containerId(containerId)
+                    .error(errorStream.toString())
+                    .output(outputStream.toString())
+                    .build();
         }catch(NotFoundException e){
             throw new ApiException(ErrorCode.BAD_REQUEST,e);
+        }catch(Exception e){
+            throw new ApiException(ErrorCode.SERVER_ERROR,e);
         }
     }
 
