@@ -4,7 +4,10 @@ import jakarta.validation.Valid;
 import org.elitclass.api.api.Api;
 import org.elitclass.api.domain.webide.model.*;
 import org.elitclass.api.domain.webide.service.WebIdeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ide")
@@ -53,5 +56,11 @@ public class WebIdeController {
     ){
         var response = webIdeService.buildIde(containerId);
         return Api.OK(response);
+    }
+    @PostMapping("/file")
+    public Api saveTree(@RequestBody Map<String, Object> fileTree) {
+        System.out.println("받은 트리 구조:");
+        System.out.println(fileTree);
+        return Api.OK(fileTree);
     }
 }

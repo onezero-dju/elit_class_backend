@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Web IDE Tree</title>
+    <style>
+        ul { list-style-type: none; }
+        li { margin-left: 20px; }
+        button { margin: 2px; }
+        input[type="text"] { width: 150px; }
+    </style>
+</head>
+<body>
+<h2>🌲 파일 트리</h2>
+<ul id="tree-root"></ul>
+<button onclick="submitTree()">📤 서버로 전송</button>
+
+<script>
+    const root = { name: "project-root", type: "folder", children: [] };
+
+    function createNodeElement(node, parentUl, parentObj) {
+        const li = document.createElement("li");
+        li.textContent = node.name + (node.type === 'folder' ? '/' : '');
+
+        if (node.type === 'file') {
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "✏️";
+            editBtn.onclick = () => {
+                const content = prompt("파일 내용:", node.content || "");
+                if (content !== null) node.content = content;
+            };
+            li.appendChild(editBtn);
+        }
+
+        const addFileBtn = document.createElement("button");
+        addFileBtn.textContent = "+ 파일";
+        addFileBtn.onclick = () => {
+            const name = prompt("파일명:");
+            if (name) {
+                const newFile = { name, type: "file", content: "" };
+                node.children.push(newFile);
+                renderTree();
+            }
+        };
+
+        const addFolderBtn = document.createElement("button");
+        addFolderBtn.textContent = "+ 폴더";
+        addFolderBtn.onclick = () => {
+            const name = prompt("폴더명:");
+            if (name) {
+                const newFolder = { name, type: "folder", children: [] };
+                node.children.push(newFolder);
+                renderTree();
+            }
+        };
+
+        li.appendChild(addFileBtn);
+        li.appendChild(addFolderBtn);
+        parentUl.appendChild(li);
+
+        if (node.children && node.children.length > 0) {
+            const subUl = document.createElement("ul");
+            node.children.forEach(child => createNodeElement(child, subUl, node));
+            li.appendChild(subUl);
+        }
+    }
+
+    function renderTree() {
+        const tree = document.getElementById("tree-root");
+        tree.innerHTML = "";
+        createNodeElement(root, tree, null);
+    }
+
+    function submitTree() {
+        fetch("http://localhost:8080/ide/file", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(root)
+        })
+            .then(res => res.json())
+            .then(data => alert("서버 응답: " + JSON.stringify(data)))
+            .catch(err => alert("에러 발생: " + err));
+    }
+
+    renderTree();
+</script>
+</body>
+</html>

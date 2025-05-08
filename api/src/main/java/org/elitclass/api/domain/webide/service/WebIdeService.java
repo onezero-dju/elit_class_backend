@@ -184,6 +184,7 @@ public class WebIdeService {
     }
 
     //TODO: return 응답 개발
+
     public WebIdeBuildResponse buildIde(String containerId){
         containerId = containerId.replaceAll("^\"|\"$", "").trim();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -192,17 +193,26 @@ public class WebIdeService {
             String[] sourceCompilerCmd = {
                     "javac","/usr/src/Main.java",
             };
-            String[] SourceBuildCmd = {"Java","/user/src/Main"};
+            String[] sourceBuildCmd = {"java","-cp","/usr/src/","Main"};
             dockerClient.inspectContainerCmd(containerId).exec();
-            ExecCreateCmdResponse execCreateCmdResponse = dockerClient.execCreateCmd(containerId)
+            ExecCreateCmdResponse sourceCompileResponse = dockerClient.execCreateCmd(containerId)
                     .withAttachStdout(true)
                     .withAttachStderr(true)
                     .withCmd(sourceCompilerCmd)
-                    .withCmd(SourceBuildCmd)
                     .exec();
 
             // 명령 실행 + 결과 출력
-            dockerClient.execStartCmd(execCreateCmdResponse.getId())
+            dockerClient.execStartCmd(sourceCompileResponse.getId())
+                    .exec(new ExecStartResultCallback(outputStream, errorStream))
+                    .awaitCompletion();
+
+            ExecCreateCmdResponse sourceBuildResponse = dockerClient.execCreateCmd(containerId)
+                    .withAttachStderr(true)
+                    .withAttachStderr(true)
+                    .withCmd(sourceBuildCmd)
+                    .exec();
+
+            dockerClient.execStartCmd(sourceBuildResponse.getId())
                     .exec(new ExecStartResultCallback(outputStream, errorStream))
                     .awaitCompletion();
 
@@ -217,7 +227,6 @@ public class WebIdeService {
             throw new ApiException(ErrorCode.SERVER_ERROR,e);
         }
     }
-
 
 
 }

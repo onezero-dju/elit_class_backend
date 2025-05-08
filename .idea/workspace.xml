@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/model/WebIdeFileUploadResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/api/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/controller/WebIdeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/controller/WebIdeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/service/WebIdeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/domain/webide/service/WebIdeService.java" afterDir="false" />
     </list>
@@ -53,8 +55,9 @@
         <option value="com.intellij.jpb.JpaEntity" />
         <option value="Interface" />
         <option value="Exception" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -94,6 +97,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;Gradle./Users/choewonhyeong/Desktop/elitclass.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.elitclass [bootJar].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.elitclass [dependencies].executor&quot;: &quot;Run&quot;,
@@ -116,7 +120,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;프로젝트&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.LLMProjectConfigurable&quot;,
@@ -275,7 +279,8 @@
       <workItem from="1746268168403" duration="5144000" />
       <workItem from="1746430847692" duration="21992000" />
       <workItem from="1746581570319" duration="4565000" />
-      <workItem from="1746589032393" duration="5719000" />
+      <workItem from="1746589032393" duration="15079000" />
+      <workItem from="1746688536305" duration="5727000" />
     </task>
     <servers />
   </component>
