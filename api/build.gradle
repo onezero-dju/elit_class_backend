@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.github.docker-java:docker-java-transport-httpclient5:3.3.3'
 
     implementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
+    runtimeOnly 'com.h2database:h2'
 
 }
 
