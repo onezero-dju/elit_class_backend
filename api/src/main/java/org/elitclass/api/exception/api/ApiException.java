@@ -1,4 +1,4 @@
-package org.elitclass.api.exception;
+package org.elitclass.api.exception.api;
 
 import lombok.Getter;
 import org.elitclass.api.error.ErrorCodeIfs;

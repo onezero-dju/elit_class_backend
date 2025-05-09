@@ -26,9 +26,13 @@ public class ClassEntity extends BaseEntity {
     @Column(nullable = false)
     private Boolean isPremium;
 
-    private Long like;
+    private Long like_count;
 
     private Long views;
+
+    private String Language;
+
+    private String Version;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

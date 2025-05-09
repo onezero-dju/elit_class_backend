@@ -1,4 +1,4 @@
-package org.elitclass.api.exception;
+package org.elitclass.api.exception.api;
 
 import org.elitclass.api.error.ErrorCodeIfs;
 
