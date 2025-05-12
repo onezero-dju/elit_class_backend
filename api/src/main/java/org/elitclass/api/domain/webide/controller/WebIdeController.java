@@ -3,20 +3,23 @@ package org.elitclass.api.domain.webide.controller;
 import jakarta.validation.Valid;
 import org.elitclass.api.api.Api;
 import org.elitclass.api.domain.webide.model.*;
+import org.elitclass.api.domain.webide.service.SaveCodeService;
 import org.elitclass.api.domain.webide.service.WebIdeService;
-import org.springframework.http.ResponseEntity;
+import org.elitclass.api.error.ErrorCode;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/ide")
 public class WebIdeController {
 
     private final WebIdeService webIdeService;
+    private final SaveCodeService saveCodeService;
 
-    public WebIdeController(WebIdeService webIdeService) {
+    public WebIdeController(WebIdeService webIdeService, SaveCodeService saveCodeService) {
         this.webIdeService = webIdeService;
+        this.saveCodeService = saveCodeService;
     }
 
     //컨테이너 생성
@@ -57,10 +60,13 @@ public class WebIdeController {
         var response = webIdeService.buildIde(containerId);
         return Api.OK(response);
     }
-    @PostMapping("/file")
-    public Api saveTree(@RequestBody Map<String, Object> fileTree) {
-        System.out.println("받은 트리 구조:");
-        System.out.println(fileTree);
-        return Api.OK(fileTree);
+    @PostMapping("/down-file")
+    public Api<Object> saveTree(@RequestBody FileUploadRequest request) {
+        try{
+            saveCodeService.saveFileTree(request,"/");
+            return Api.OK(request);
+        } catch (IOException e) {
+            return Api.ERROR(ErrorCode.SERVER_ERROR,"코드데이터 저장 실패");
+        }
     }
 }
