@@ -82,11 +82,11 @@ public class WebIdeService {
                 .build();
     }
 
-    //컨테이너 조회
+
+
+
 
     //컨테이너 삭제
-
-    //컨테이너 삭제후 redis에서도 삭제
     public WebIdeDeleteResponse deleteIde(String containerId) {
 
         containerId = containerId.replaceAll("^\"|\"$", "").trim();
@@ -183,8 +183,8 @@ public class WebIdeService {
         }
     }
 
-    //TODO: return 응답 개발
 
+    // 유저의 코드 빌드에 대한 로직
     public WebIdeBuildResponse buildIde(String containerId){
         containerId = containerId.replaceAll("^\"|\"$", "").trim();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -30,7 +30,8 @@
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
-    "Spring Boot.ApiApplication.executor": "Run"
+    "Spring Boot.ApiApplication.executor": "Run",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
   <component name="TaskManager">
