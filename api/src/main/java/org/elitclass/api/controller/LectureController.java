@@ -79,7 +79,7 @@ public class LectureController {
 //            @ApiResponse(responseCode = "3200", description = "강의 신고 성공"),
 //            @ApiResponse(responseCode = "3404", description = "강의를 찾을 수 없음"),
 //    })
-//    @DeleteMapping("/report/lecture/{id}")
+//    @PostMapping("/report/lecture/{id}")
 //    public Api<Void> lectureReport(@PathVariable Long id) {
 //        lectureService.lectureReport(id);
 //        return Api.OK(null);

@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/controller/PageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/PageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/controller/LectureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/controller/LectureController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/model/PageDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/model/PageDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/LectureService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/LectureService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/controller/PageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/controller/PageController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +276,8 @@
       <workItem from="1746680483601" duration="26000" />
       <workItem from="1747270758672" duration="3333000" />
       <workItem from="1747278087049" duration="3771000" />
-      <workItem from="1747282068078" duration="610000" />
+      <workItem from="1747282068078" duration="700000" />
+      <workItem from="1747283245453" duration="1450000" />
     </task>
     <servers />
   </component>
