@@ -3,8 +3,6 @@ package org.elitclass.api.service;
 import org.elitclass.api.model.LectureDto;
 import org.elitclass.db.lecture.LectureEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -23,6 +21,7 @@ public class LectureConverter {
                 .lectureTitle(lectureEntity.getLectureTitle())
                 .context(lectureEntity.getContext())
                 .pageList(pageList)
+                .classId(lectureEntity.getId())
                 .build();
     }
 }

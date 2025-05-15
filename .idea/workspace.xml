@@ -5,22 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585bac7c-a5ac-44d0-bc76-443c50eded44" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/controller/LectureController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/LectureService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/a204bce8-7882-475f-9a10-621625056918.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/a204bce8-7882-475f-9a10-621625056918.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/25__4__6___8_22__________1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/25__4__6__오후_8_22,_체크아웃_전에_커밋되지_않은_변경_내용_[변경]1/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/api/Api.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/api/Api.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/error/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/error/ErrorCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/ClassRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/enums/ClassStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/classes/enums/ClassStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/model/LectureDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/model/LectureDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/ClassConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/ClassConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/ClassService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/ClassService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/LectureConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/org/elitclass/api/service/LectureConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/lecture/LectureEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/lecture/LectureEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/page/PageEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/enums/UserStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/db/src/main/java/org/elitclass/db/user/enums/UserStatus.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,8 +59,8 @@
         <option value="Exception" />
         <option value="com.intellij.jpb.JpaEntity" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -116,7 +109,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;Spring Boot.ApiApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/class&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/USER/Desktop/elit_class_backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -253,8 +246,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.117" />
-        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.117" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129" />
       </set>
     </attachedChunks>
   </component>
@@ -287,6 +280,7 @@
       <workItem from="1746678042802" duration="45000" />
       <workItem from="1746680280994" duration="130000" />
       <workItem from="1746680483601" duration="26000" />
+      <workItem from="1747270758672" duration="3303000" />
     </task>
     <servers />
   </component>

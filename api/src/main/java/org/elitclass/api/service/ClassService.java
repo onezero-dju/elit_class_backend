@@ -23,7 +23,7 @@ public class ClassService {
     private final ClassConverter classConverter;
     private final UserRepository userRepository;
 
-    // Create
+    // Create(클래스 생성)
     public ClassDto create(ClassRequest classRequest) {
         // 로그인 시스템 구현하면 인증된 사용자 정보로 대체
         Long userId = classRequest.getUserId();
@@ -35,7 +35,7 @@ public class ClassService {
             .classTitle(classRequest.getClassTitle())
             .description(classRequest.getDescription())
             .isPremium(false)
-            .likes(0L)
+            .likeCount(0L)
             .views(0L)
             .status(ClassStatus.REGISTERED)
             .user(user)

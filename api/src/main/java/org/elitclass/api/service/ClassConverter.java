@@ -22,7 +22,7 @@ public class ClassConverter {
                 .classTitle(classEntity.getClassTitle())
                 .description(classEntity.getDescription())
                 .isPremiun(classEntity.getIsPremium())
-                .likes(classEntity.getLikes())
+                .likes(classEntity.getLikeCount())
                 .views(classEntity.getViews())
                 .status("등록")
                 .lectureList(lectureList)
