@@ -49,7 +49,7 @@ public class LectureService {
     }
 
     // LectureUpdate
-    public LectureDto lectuerUpdate(Long id, LectureRequest lectureRequest) {
+    public LectureDto lectureUpdate(Long id, LectureRequest lectureRequest) {
         var entity = lectureRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Lecture not found"));
         entity.setLectureTitle(lectureRequest.getLectureTitle());
@@ -65,10 +65,11 @@ public class LectureService {
         lectureRepository.deleteById(id);
     }
 
-//    // LectuerReport
+    // LectuerReport
 //    public void letureReport(Long id){
 //        var entity = lectureRepository.findById(id)
 //                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Lecture not found"));
-//        entity.set
+//        entity.setStatus(LectureStatus.lectureReport);
+//        lectureRepository.save(entity);
 //    }
 }

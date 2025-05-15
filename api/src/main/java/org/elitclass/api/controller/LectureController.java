@@ -52,4 +52,38 @@ public class LectureController {
         return Api.OK(lectureService.lectureViewAll());
     }
 
+    @Operation(summary = "강의 수정", description = "기존 강의의 정보를 수정합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "3200", description = "강의 수정 성공"),
+            @ApiResponse(responseCode = "3404", description = "강의를 찾을 수 없음"),
+            @ApiResponse(responseCode = "3400", description = "잘못된 요청")
+    })
+    @PutMapping("/lecture/correction/{id}")
+    public Api<LectureDto> lectureUpdate(@PathVariable Long id, @Valid @RequestBody LectureRequest request) {
+        return Api.OK(lectureService.lectureUpdate(id, request));
+    }
+
+    @Operation(summary = "강의 삭제", description = "특정 강의를 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "3200", description = "강의 삭제 성공"),
+            @ApiResponse(responseCode = "3404", description = "강의를 찾을 수 없음"),
+    })
+    @DeleteMapping("/lecture/delete/{id}")
+    public Api<Void> lectureDelete(@PathVariable Long id) {
+        lectureService.lectureDelete(id);
+        return Api.OK(null);
+    }
+
+//    @Operation(summary = "강의 신고", description = "특정 강의를 신고합니다.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "3200", description = "강의 신고 성공"),
+//            @ApiResponse(responseCode = "3404", description = "강의를 찾을 수 없음"),
+//    })
+//    @DeleteMapping("/report/lecture/{id}")
+//    public Api<Void> lectureReport(@PathVariable Long id) {
+//        lectureService.lectureReport(id);
+//        return Api.OK(null);
+//    }
+
 }
+

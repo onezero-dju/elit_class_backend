@@ -10,12 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Schema(description = "페이지 응답 DTO")
 @Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Builder
 public class PageDto {
     private Long id;
