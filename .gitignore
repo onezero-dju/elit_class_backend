@@ -5,6 +5,7 @@ build/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
+
 .idea/
 .idea/modules.xml
 .idea/jarRepositories.xml
@@ -43,3 +44,6 @@ bin/
 .DS_Store
 
 api/src/main/resources/application.yaml
+
+### project tmp ###
+tmp/

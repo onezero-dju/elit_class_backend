@@ -11,14 +11,22 @@
     </style>
 </head>
 <body>
-<h2>🌲 파일 트리</h2>
+<h2>🌲 Web IDE - 파일 트리 구성</h2>
+
+<label>📦 Container ID: <input type="text" id="containerIdInput" placeholder="컨테이너 ID 입력"></label><br>
+<label>📁 Project Name: <input type="text" id="projectNameInput" placeholder="프로젝트 이름 입력"></label><br><br>
+
 <ul id="tree-root"></ul>
 <button onclick="submitTree()">📤 서버로 전송</button>
 
 <script>
-    const root = { name: "project-root", type: "folder", children: [] };
+    let rootNode = {
+        name: "project-root",
+        type: "folder",
+        children: []
+    };
 
-    function createNodeElement(node, parentUl, parentObj) {
+    function createNodeElement(node, parentUl) {
         const li = document.createElement("li");
         li.textContent = node.name + (node.type === 'folder' ? '/' : '');
 
@@ -38,6 +46,7 @@
             const name = prompt("파일명:");
             if (name) {
                 const newFile = { name, type: "file", content: "" };
+                if (!node.children) node.children = [];
                 node.children.push(newFile);
                 renderTree();
             }
@@ -49,6 +58,7 @@
             const name = prompt("폴더명:");
             if (name) {
                 const newFolder = { name, type: "folder", children: [] };
+                if (!node.children) node.children = [];
                 node.children.push(newFolder);
                 renderTree();
             }
@@ -60,7 +70,7 @@
 
         if (node.children && node.children.length > 0) {
             const subUl = document.createElement("ul");
-            node.children.forEach(child => createNodeElement(child, subUl, node));
+            node.children.forEach(child => createNodeElement(child, subUl));
             li.appendChild(subUl);
         }
     }
@@ -68,14 +78,28 @@
     function renderTree() {
         const tree = document.getElementById("tree-root");
         tree.innerHTML = "";
-        createNodeElement(root, tree, null);
+        createNodeElement(rootNode, tree);
     }
 
     function submitTree() {
-        fetch("http://localhost:8080/ide/file", {
+        const containerId = document.getElementById("containerIdInput").value.trim();
+        const projectName = document.getElementById("projectNameInput").value.trim();
+
+        if (!containerId || !projectName) {
+            alert("Container ID와 Project Name을 입력해주세요.");
+            return;
+        }
+
+        const requestPayload = {
+            container_id : containerId,
+            project_name: projectName,
+            files: rootNode
+        };
+
+        fetch("http://localhost:8080/ide/down-file", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(root)
+            body: JSON.stringify(requestPayload)
         })
             .then(res => res.json())
             .then(data => alert("서버 응답: " + JSON.stringify(data)))

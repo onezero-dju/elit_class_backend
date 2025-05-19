@@ -32,7 +32,7 @@ public class WebIdeService {
     }
 
     //java 컨테이너 생성
-    //생성후 redis에 정보 추가
+    //TODO: 생성후 redis에 정보 추가
     public WebIdeCreateResponse createIdeWithJDK(Long userId){
         try{
 
@@ -61,6 +61,7 @@ public class WebIdeService {
     }
 
     //생성
+    //TODO : 포트중복 최소화
     public WebIdeCreateResponse createIde(Long userId){
         int externalPort = new Random().ints(10000,11000).findFirst().orElseThrow();
 
@@ -82,16 +83,16 @@ public class WebIdeService {
                 .build();
     }
 
-    //컨테이너 조회
+    //TODO: 컨테이너 조회
+
+
 
     //컨테이너 삭제
-
     //컨테이너 삭제후 redis에서도 삭제
     public WebIdeDeleteResponse deleteIde(String containerId) {
 
         containerId = containerId.replaceAll("^\"|\"$", "").trim();
 
-        System.out.println(containerId);
 
         try {
             dockerClient.inspectContainerCmd(containerId).exec();
@@ -99,10 +100,12 @@ public class WebIdeService {
             dockerClient.removeContainerCmd(containerId)
                     .withForce(true)
                     .exec();
+
             WebIdeDeleteResponse response = WebIdeDeleteResponse.builder()
                     .containerId(containerId)
                     .message("Deleted ide")
                     .build();
+
             return response;
 
         } catch (NotFoundException e) {
@@ -183,7 +186,6 @@ public class WebIdeService {
         }
     }
 
-    //TODO: return 응답 개발
 
     public WebIdeBuildResponse buildIde(String containerId){
         containerId = containerId.replaceAll("^\"|\"$", "").trim();
@@ -195,6 +197,7 @@ public class WebIdeService {
             };
             String[] sourceBuildCmd = {"java","-cp","/usr/src/","Main"};
             dockerClient.inspectContainerCmd(containerId).exec();
+
             ExecCreateCmdResponse sourceCompileResponse = dockerClient.execCreateCmd(containerId)
                     .withAttachStdout(true)
                     .withAttachStderr(true)

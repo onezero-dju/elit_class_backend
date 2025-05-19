@@ -63,7 +63,9 @@ public class WebIdeController {
     @PostMapping("/down-file")
     public Api<Object> saveTree(@RequestBody FileUploadRequest request) {
         try{
-            saveCodeService.saveFileTree(request,"/");
+            System.out.println(request.projectName());
+            System.out.println(request.containerId());
+            saveCodeService.saveFileTreeToContainer(request);
             return Api.OK(request);
         } catch (IOException e) {
             return Api.ERROR(ErrorCode.SERVER_ERROR,"코드데이터 저장 실패");
