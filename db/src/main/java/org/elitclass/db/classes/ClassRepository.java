@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ClassRepository extends JpaRepository<ClassesEntity, Long> {
     List<ClassesEntity> findAllByIdAndStatusOrderByIdDesc(Long id,ClassStatus status );
+    boolean existsByUserIdAndClassId(Long userId, Long classId);
 }
