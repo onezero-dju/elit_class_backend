@@ -1,20 +1,20 @@
-package org.delivery.oauth.dto;
+package org.elitclass.api.dto;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 public class CustomOAuth2User implements OAuth2User {
 
-    private final UserDTO userDTO;
+    private final OAuth2Response oAuth2Response;
+    private final String role;
 
-    public CustomOAuth2User(UserDTO userDTO) {
-        this.userDTO = userDTO;
+    public CustomOAuth2User(OAuth2Response oAuth2Response, String role) {
+        this.oAuth2Response = oAuth2Response;
+        this.role = role;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CustomOAuth2User implements OAuth2User {
 
             @Override
             public String getAuthority() {
-                return userDTO.getRole();
+                return role;
             }
         });
         return collection;
@@ -38,11 +38,20 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return userDTO.getNickname();
+        return oAuth2Response.getName();
     }
 
+    public String getProvider() {
+        return oAuth2Response.getProvider();
+    }
+
+    public String getProviderId() {
+        return oAuth2Response.getProviderId();
+    }
+
+
     public String getEmail() {
-        return userDTO.getEmail();
+        return oAuth2Response.getEmail();
     }
 
 }

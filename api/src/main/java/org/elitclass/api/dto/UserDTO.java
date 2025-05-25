@@ -1,4 +1,4 @@
-package org.delivery.oauth.dto;
+package org.elitclass.api.dto;
 
 import lombok.Getter;
 import lombok.Setter;

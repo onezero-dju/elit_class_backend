@@ -1,4 +1,4 @@
-package org.delivery.oauth.dto;
+package org.elitclass.api.dto;
 
 public interface OAuth2Response {
 
