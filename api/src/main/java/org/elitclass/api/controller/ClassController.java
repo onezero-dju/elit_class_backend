@@ -10,6 +10,7 @@ import org.elitclass.api.api.Api;
 import org.elitclass.api.model.ClassDto;
 import org.elitclass.api.model.ClassRequest;
 import org.elitclass.api.service.ClassService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class ClassController {
         @ApiResponse(responseCode = "2400", description = "잘못된 요청")
     })
     @PostMapping("/class")
-    public Api<ClassDto> create(@Valid @RequestBody ClassRequest request) {
-        return Api.OK(classService.create(request));
+    public Api<ClassDto> create(@RequestBody ClassRequest request, Authentication authentication) {
+        return Api.OK(classService.create(request, authentication));
     }
 
     @Operation(summary = "클래스 조회", description = "특정 클래스의 정보를 조회합니다.")
@@ -56,8 +57,8 @@ public class ClassController {
         @ApiResponse(responseCode = "2400", description = "잘못된 요청")
     })
     @PutMapping("/class/correction/{id}")
-    public Api<ClassDto> update(@PathVariable Long id, @Valid @RequestBody ClassRequest request) {
-        return Api.OK(classService.update(id, request));
+    public Api<ClassDto> update(@PathVariable Long id, @RequestBody ClassRequest request, Authentication authentication) {
+        return Api.OK(classService.update(id, request, authentication));
     }
 
     @Operation(summary = "클래스 삭제", description = "특정 클래스를 삭제합니다.")
@@ -66,8 +67,8 @@ public class ClassController {
         @ApiResponse(responseCode = "2404", description = "클래스를 찾을 수 없음")
     })
     @DeleteMapping("/class/delete/{id}")
-    public Api<Void> delete(@PathVariable Long id) {
-        classService.delete(id);
+    public Api<Void> delete(@RequestBody Long id, Authentication authentication) {
+        classService.delete(id, authentication);
         return Api.OK(null);
     }
 

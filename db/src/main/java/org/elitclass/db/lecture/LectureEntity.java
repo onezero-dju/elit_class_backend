@@ -37,5 +37,6 @@ public class LectureEntity extends BaseEntity {
     private ClassesEntity classes;
 
     @OneToMany(mappedBy = "lecture")
+    @Builder.Default
     private List<PageEntity> pageList = List.of();
 }

@@ -32,11 +32,9 @@ public class ClassesEntity extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
-    @Column(name = "is_premium",nullable = false)
-    private Boolean isPremium;
-
     @Column(name = "like_count",nullable = false)
-    private int likeCount = 0;
+    @Builder.Default
+    private Long likeCount = 0L;
 
     @Column(name = "views",nullable = false)
     private Long views;
@@ -49,9 +47,11 @@ public class ClassesEntity extends BaseEntity {
     private ClassStatus status;
 
     @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<LikesEntity> likes = List.of();
 
     @OneToMany(mappedBy = "classes")
+    @Builder.Default
     private List<LectureEntity> lecturesList = List.of();
 
 }

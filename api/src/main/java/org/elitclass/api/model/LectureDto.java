@@ -13,5 +13,6 @@ public class LectureDto {
     private String context;
     private Long classId;
 
+    @Builder.Default
     private List<PageDto> pageList = List.of();
 }

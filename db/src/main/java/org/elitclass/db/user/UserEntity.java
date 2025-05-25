@@ -2,6 +2,10 @@ package org.elitclass.db.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.elitclass.db.BaseEntity;
 import org.elitclass.db.likes.LikesEntity;
@@ -18,20 +22,59 @@ import java.util.List;
 @SuperBuilder
 public class UserEntity extends BaseEntity {
 
-    
     @Column(length = 100,unique = true, nullable = false)
     private String email;
 
     @Column(length = 50, nullable = false)
     private String nickname;
 
+
     @Column(length = 100)
-    private String payment;
+    private String provider;
 
-    @Column(name = "is_certified",length = 50,nullable = false)
-    private String isCertified;
+    @Column(length = 100)
+    @JoinColumn(name = "provider_id")
+    private String providerId;
 
-    @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+//    @Column(name = "is_certified",length = 50,nullable = false)
+//    private String isCertified;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<LikesEntity> likes = List.of();
 
+
+
+    /*
+        private String statusContext;
+
+        @Column(length = 100)
+        private String payment;
+
+        @Column(length = 50)
+        private String isCertified;
+
+
+        private Long classId;
+    */
+//    public void setProviderId(String providerId) {
+//        this.providerId = providerId;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public void setName(String name) {
+//        this.nickname = name;
+//    }
+//
+//    public String getProvider() {
+//        return provider;
+//    }
+//
+//    public void setProvider(String provider) {
+//        this.provider = provider;
+//    }
 }
+

@@ -14,6 +14,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
 
@@ -50,36 +52,35 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
 
         String providerId = oAuth2Response.getProviderId();
 
-        UserEntity existData = userRepository.findByProviderId(providerId);
+        Optional<UserEntity> existData = userRepository.findByProviderId(providerId);
 
-        String provider = null;
+        UserEntity userEntity;
 
         // 처음 로그인하는 경우
-        if (existData == null) {
-            UserEntity userEntity = new UserEntity();
+        if (existData.isPresent()) {
+            userEntity = existData.get();
 
             userEntity.setProvider(oAuth2Response.getProvider());
             userEntity.setProviderId(providerId);
             userEntity.setEmail(oAuth2Response.getEmail());
-            userEntity.setName(oAuth2Response.getName());
+            userEntity.setNickname(oAuth2Response.getName());
 
             userRepository.save(userEntity);
 
         } // 이전 값이 있는 경우
         else {
-            provider = existData.getProvider();
+            userEntity = new UserEntity();
+            userEntity.setProvider(oAuth2Response.getProvider());
+            userEntity.setProviderId(providerId);
+            userEntity.setEmail(oAuth2Response.getEmail());
+            userEntity.setNickname(oAuth2Response.getName());
 
-            existData.setProvider(oAuth2Response.getProvider());
-            existData.setProviderId(providerId);
-            existData.setEmail(oAuth2Response.getEmail());
-            existData.setName(oAuth2Response.getName());
-
-            userRepository.save(existData);
+            userRepository.save(userEntity);
 
         }
 
 
-        return new CustomOAuth2User(oAuth2Response, provider);
+        return new CustomOAuth2User(oAuth2Response, userEntity.getProvider());
     }
 
 }

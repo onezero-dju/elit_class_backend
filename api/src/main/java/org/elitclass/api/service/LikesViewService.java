@@ -25,12 +25,12 @@ public class LikesViewService {
     private final UserRepository userRepository;
     private final ClassRepository classRepository;
 
-    public int getLikeClass(Long classId){
-        ClassesEntity classes = classRepository.findById(classId)
-                .orElseThrow(() -> new IllegalArgumentException("Class not found"));
-        List<LikesEntity> num = likesRepository.findByClasses(classes);
-        return num.size();
-    }
+//    public int getLikeClass(Long classId){
+//        ClassesEntity classes = classRepository.findById(classId)
+//                .orElseThrow(() -> new IllegalArgumentException("Class not found"));
+//        List<LikesEntity> num = likesRepository.findByClasses(classes);
+//        return num.size();
+//    }
 
     @Transactional
     public LikesViewDto pressLike(Long classId, Long userId) {
@@ -48,10 +48,10 @@ public class LikesViewService {
             likesRepository.save(LikesEntity.builder().user(user).classes(classes).build());
             likesViewDto.setLikeCheck(1);
         }
-        List<LikesEntity> num = likesRepository.findByClasses(classes);
-
-        likesViewDto.setCount(num.size());
-        likesViewDto.setUserName(String.valueOf(user.getId()));
+//        List<LikesEntity> num = likesRepository.findByClasses(classes);
+//
+//        likesViewDto.setCount(num.size());
+//        likesViewDto.setUserName(String.valueOf(user.getId()));
         return likesViewDto;
     }
 }

@@ -41,4 +41,9 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-api/src/main/resources/application.yaml
+
+*/application.properties
+*/application.yml
+.idea
+**/application.properties
+**/SocialClientRegistration.java
