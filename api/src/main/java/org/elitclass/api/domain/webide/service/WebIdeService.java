@@ -10,6 +10,9 @@ import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
+import org.apache.commons.io.FileUtils;
 import org.elitclass.api.domain.webide.model.*;
 import org.elitclass.api.error.ErrorCode;
 import org.elitclass.api.exception.api.ApiException;
@@ -17,7 +20,13 @@ import org.elitclass.api.exception.docker.DockerOperationException;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Random;
 import java.util.UUID;
@@ -139,54 +148,85 @@ public class WebIdeService {
 
 
     }
+
     //유저에 대한 코드를 저장하는 로직
-    public SaveCodeResponse saveCode(SaveCodeRequest request) {
-        var containerId = request.getContainerId().replaceAll("^\"|\"$", "").trim();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
+    //TODO: 코드 삭제
+    public void saveFileTreeToContainer(FileUploadRequest request) throws IOException {
 
-        try {
-            dockerClient.inspectContainerCmd(containerId).exec();
-            // 코드 문자열을 base64로 인코딩
-            String base64Code = Base64.getEncoder().encodeToString(
-                    request.getCode().getBytes(StandardCharsets.UTF_8)
-            );
+        UUID uuid = UUID.randomUUID();
+        String projectName = uuid+"-"+request.projectName();
+        Path projectPath = Paths.get("./tmp",projectName);
+        Files.createDirectories(projectPath);
+        saveRecursively(request.files() ,projectPath);
 
-            // base64로 저장: echo <code> | base64 -d > /usr/src/Main.java
-            String[] saveSourceCommand = {
-                    "sh", "-c",
-                    "echo '" + base64Code + "' | base64 -d > /usr/src/Main.java"
-            };
+        Path tarPath = Paths.get("./tmp",projectName+".tar");
+        File tarFile =tarPath.toFile();
 
-            // 명령 생성
-            ExecCreateCmdResponse execCreateCmdResponse = dockerClient.execCreateCmd(containerId)
-                    .withAttachStdout(true)
-                    .withAttachStderr(true)
-                    .withCmd(saveSourceCommand)
+        System.out.println(tarFile.getAbsolutePath());
+        try (FileOutputStream fos = new FileOutputStream(tarFile);
+             TarArchiveOutputStream taos = new TarArchiveOutputStream(fos)){
+
+            taos.setLongFileMode(TarArchiveOutputStream.LONGFILE_POSIX);
+            Files.walk(projectPath).filter(path->!Files.isDirectory(path)).forEach(path -> {
+                try{
+                    Path relativePath = projectPath.getParent().relativize(path);
+                    TarArchiveEntry entry = new TarArchiveEntry(path.toFile(),relativePath.toString());
+                    taos.putArchiveEntry(entry);
+                    Files.copy(path, taos);
+                    taos.closeArchiveEntry();
+                }catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            taos.finish();
+        }
+
+        try{
+            System.out.println(request.containerId());
+            dockerClient.copyArchiveToContainerCmd(request.containerId())
+                    .withHostResource(tarFile.getAbsolutePath())
+                    .withRemotePath("/usr/src")
                     .exec();
 
-            // 명령 실행 + 결과 출력
+            System.out.println(tarFile.getName());
+
+            var execCreateCmdResponse = dockerClient.execCreateCmd(request.containerId())
+                    .withCmd("tar", "-xvf", "/usr/src/"+tarFile.getName(), "-C", "/usr/src")
+                    .withAttachStdout(true)
+                    .withAttachStderr(true)
+                    .exec();
+
             dockerClient.execStartCmd(execCreateCmdResponse.getId())
-                    .exec(new ExecStartResultCallback(outputStream, errorStream))
+                    .exec(new ExecStartResultCallback(System.out, System.err))
                     .awaitCompletion();
 
-            // 결과 로그 출력 (디버깅용)
-            System.out.println("STDOUT:\n" + outputStream);
-            System.out.println("STDERR:\n" + errorStream);
+            Files.delete(tarFile.toPath());
+        }catch (NotFoundException | NullPointerException e){
+            throw new ApiException(ErrorCode.BAD_REQUEST,e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            return SaveCodeResponse.builder()
-                    .code(request.getCode())
-                    .message("성공적으로 데이터를 저장했습니다")
-                    .build();
-
-        } catch (NotFoundException e) {
-            throw new ApiException(ErrorCode.BAD_REQUEST, e);
-        } catch (Exception e) {
-            throw new ApiException(ErrorCode.SERVER_ERROR, e);
+    // 파일 다운로드 함수
+    private void saveRecursively(FileNode node, Path currentPath) throws IOException {
+        Path targetPath = currentPath.resolve(node.name());
+        if("folder".equalsIgnoreCase(node.type())){
+            Files.createDirectories(targetPath);
+            if(node.children() != null){
+                for(FileNode child : node.children()){
+                    saveRecursively(child,targetPath);
+                }
+            }
+        } else if ("file".equalsIgnoreCase(node.type())) {
+            Files.createDirectories(targetPath.getParent());
+            Files.write(targetPath,node.content().getBytes(StandardCharsets.UTF_8));
         }
     }
 
 
+    //코드 실행 로직
+    //TODO 파일 전체를 빌드하는 로직으로 리펙토링
     public WebIdeBuildResponse buildIde(String containerId){
         containerId = containerId.replaceAll("^\"|\"$", "").trim();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -230,6 +270,4 @@ public class WebIdeService {
             throw new ApiException(ErrorCode.SERVER_ERROR,e);
         }
     }
-
-
 }

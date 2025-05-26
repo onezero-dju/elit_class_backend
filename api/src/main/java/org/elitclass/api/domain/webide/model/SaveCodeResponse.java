@@ -7,6 +7,6 @@ import lombok.*;
 @Setter
 @Builder
 public class SaveCodeResponse {
-    private String code;
+
     private String message;
 }

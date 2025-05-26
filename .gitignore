@@ -6,7 +6,6 @@ build/
 
 ### IntelliJ IDEA ###
 
-/.idea/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -47,3 +46,5 @@ api/src/main/resources/application.yaml
 
 ### project tmp ###
 tmp/
+
+/.idea/
