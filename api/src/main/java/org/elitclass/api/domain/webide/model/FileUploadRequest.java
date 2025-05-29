@@ -5,7 +5,7 @@ import java.util.List;
 public record FileUploadRequest (
     String containerId,
     String projectName,
-    FileNode files
+    List<FileNode> files
 ){}
 
 

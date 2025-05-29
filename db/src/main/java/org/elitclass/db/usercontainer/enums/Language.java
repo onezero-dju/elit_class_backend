@@ -1,9 +1,9 @@
-package org.elitclass.api.domain.webide.model;
+package org.elitclass.db.usercontainer.enums;
 
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum language {
+public enum Language {
     JAVA("java"),
     PYTHON("python"),;
     private String Type;

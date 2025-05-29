@@ -41,7 +41,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
+/.idea/
 api/src/main/resources/application.yaml
 
 ### project tmp ###

@@ -8,8 +8,7 @@ import org.elitclass.db.usercontainer.enums.Language;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaveCodeRequest {
-    private String containerId;
-    private String code;
-    private Language language;
+public class DeleteIdeRequest {
+    Long userId;
+    Language language;
 }

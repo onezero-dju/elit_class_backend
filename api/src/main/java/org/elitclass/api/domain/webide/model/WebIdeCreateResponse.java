@@ -10,4 +10,6 @@ import org.springframework.context.annotation.Bean;
 public class WebIdeCreateResponse {
     private String containerId;
     private Long userId;
+    private String containerName;
+    private String projectName;
 }

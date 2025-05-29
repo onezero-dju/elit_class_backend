@@ -2,108 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Web IDE Tree</title>
+    <title>Web IDE Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ace.js"></script>
     <style>
-        ul { list-style-type: none; }
-        li { margin-left: 20px; }
-        button { margin: 2px; }
-        input[type="text"] { width: 150px; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: monospace;
+            background-color: #1e1e1e;
+            color: white;
+        }
+
+        #topbar {
+            background-color: #333;
+            padding: 10px;
+        }
+
+        #workspace {
+            display: flex;
+            height: calc(100vh - 40px);
+        }
+
+        #file-tree {
+            width: 250px;
+            background-color: #2e2e2e;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        #editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #editor {
+            flex: 1;
+            height: 100%;
+        }
+
+        .file, .folder {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .folder {
+            font-weight: bold;
+        }
+
+        .selected {
+            background-color: #555;
+        }
+
+        input, button {
+            font-family: monospace;
+            margin: 2px;
+        }
     </style>
 </head>
 <body>
-<h2>🌲 Web IDE - 파일 트리 구성</h2>
+<div id="topbar">
+    📦 Container ID: <input type="text" id="containerIdInput" placeholder="컨테이너 ID" />
+    📁 Project Name: <input type="text" id="projectNameInput" placeholder="프로젝트 이름" />
+    <button onclick="sendToServer()">🚀 업로드</button>
+</div>
 
-<label>📦 Container ID: <input type="text" id="containerIdInput" placeholder="컨테이너 ID 입력"></label><br>
-<label>📁 Project Name: <input type="text" id="projectNameInput" placeholder="프로젝트 이름 입력"></label><br><br>
-
-<ul id="tree-root"></ul>
-<button onclick="submitTree()">📤 서버로 전송</button>
+<div id="workspace">
+    <div id="file-tree"></div>
+    <div id="editor-container">
+        <div id="editor">/* 파일을 선택해주세요 */</div>
+    </div>
+</div>
 
 <script>
-    let rootNode = {
+    const editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+
+    let root = {
         name: "project-root",
         type: "folder",
         children: []
     };
-
-    function createNodeElement(node, parentUl) {
-        const li = document.createElement("li");
-        li.textContent = node.name + (node.type === 'folder' ? '/' : '');
-
-        if (node.type === 'file') {
-            const editBtn = document.createElement("button");
-            editBtn.textContent = "✏️";
-            editBtn.onclick = () => {
-                const content = prompt("파일 내용:", node.content || "");
-                if (content !== null) node.content = content;
-            };
-            li.appendChild(editBtn);
-        }
-
-        const addFileBtn = document.createElement("button");
-        addFileBtn.textContent = "+ 파일";
-        addFileBtn.onclick = () => {
-            const name = prompt("파일명:");
-            if (name) {
-                const newFile = { name, type: "file", content: "" };
-                if (!node.children) node.children = [];
-                node.children.push(newFile);
-                renderTree();
-            }
-        };
-
-        const addFolderBtn = document.createElement("button");
-        addFolderBtn.textContent = "+ 폴더";
-        addFolderBtn.onclick = () => {
-            const name = prompt("폴더명:");
-            if (name) {
-                const newFolder = { name, type: "folder", children: [] };
-                if (!node.children) node.children = [];
-                node.children.push(newFolder);
-                renderTree();
-            }
-        };
-
-        li.appendChild(addFileBtn);
-        li.appendChild(addFolderBtn);
-        parentUl.appendChild(li);
-
-        if (node.children && node.children.length > 0) {
-            const subUl = document.createElement("ul");
-            node.children.forEach(child => createNodeElement(child, subUl));
-            li.appendChild(subUl);
-        }
-    }
+    let selectedFile = null;
 
     function renderTree() {
-        const tree = document.getElementById("tree-root");
-        tree.innerHTML = "";
-        createNodeElement(rootNode, tree);
+        const tree = document.getElementById("file-tree");
+        tree.innerHTML = '';
+        appendNode(root, tree);
     }
 
-    function submitTree() {
-        const containerId = document.getElementById("containerIdInput").value.trim();
-        const projectName = document.getElementById("projectNameInput").value.trim();
+    function appendNode(node, parentElement) {
+        const nodeElem = document.createElement("div");
+        nodeElem.className = node.type;
+        nodeElem.textContent = node.name;
 
-        if (!containerId || !projectName) {
-            alert("Container ID와 Project Name을 입력해주세요.");
-            return;
+        nodeElem.onclick = (e) => {
+            e.stopPropagation();
+            if (node.type === "file") {
+                if (selectedFile) selectedFile.elem.classList.remove("selected");
+                selectedFile = { node, elem: nodeElem };
+                nodeElem.classList.add("selected");
+                editor.setValue(node.content || "", -1);
+            }
+        };
+
+        const actions = document.createElement("div");
+        if (node.type === "folder") {
+            const addFileBtn = document.createElement("button");
+            addFileBtn.textContent = "+F";
+            addFileBtn.onclick = () => {
+                const name = prompt("파일명:");
+                if (name) {
+                    node.children.push({ name, type: "file", content: "" });
+                    renderTree();
+                }
+            };
+            const addFolderBtn = document.createElement("button");
+            addFolderBtn.textContent = "+D";
+            addFolderBtn.onclick = () => {
+                const name = prompt("폴더명:");
+                if (name) {
+                    node.children.push({ name, type: "folder", children: [] });
+                    renderTree();
+                }
+            };
+            actions.append(addFileBtn, addFolderBtn);
+        }
+        nodeElem.appendChild(actions);
+        parentElement.appendChild(nodeElem);
+
+        if (node.type === "folder" && node.children) {
+            const subTree = document.createElement("div");
+            subTree.style.marginLeft = "15px";
+            node.children.forEach(child => appendNode(child, subTree));
+            parentElement.appendChild(subTree);
+        }
+    }
+
+    function sendToServer() {
+        if (selectedFile) {
+            selectedFile.node.content = editor.getValue();
         }
 
-        const requestPayload = {
-            container_id : containerId,
+        const containerId = document.getElementById("containerIdInput").value.trim();
+        const projectName = document.getElementById("projectNameInput").value.trim();
+        if (!containerId || !projectName) return alert("Container ID와 프로젝트명을 입력하세요.");
+
+        const payload = {
+            container_id: containerId,
             project_name: projectName,
-            files: rootNode
+            files: root
         };
 
         fetch("http://localhost:8080/ide/down-file", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestPayload)
+            body: JSON.stringify(payload)
         })
             .then(res => res.json())
-            .then(data => alert("서버 응답: " + JSON.stringify(data)))
-            .catch(err => alert("에러 발생: " + err));
+            .then(res => alert("✅ 업로드 완료"))
+            .catch(err => alert("❌ 실패: " + err));
     }
 
     renderTree();

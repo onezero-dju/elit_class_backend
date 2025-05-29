@@ -31,12 +31,9 @@ CREATE TABLE users (
                        class_id BIGINT NOT NULL,
                        email VARCHAR(100) NOT NULL,
                        is_certified VARCHAR(50) NOT NULL,
-                       payment VARCHAR(100),
-                       FOREIGN KEY (class_id) REFERENCES classes(id)
+                       payment VARCHAR(100)
+
 );
-
-ALTER TABLE classes ADD FOREIGN KEY (user_id) REFERENCES users(id);
-
 -- 강의 & 페이지
 CREATE TABLE lectures (
                           id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -109,3 +106,16 @@ CREATE TABLE user_interests (
                                 FOREIGN KEY (user_id) REFERENCES users(id),
                                 FOREIGN KEY (interest_id) REFERENCES interest_categories(id)
 );
+
+CREATE TABLE user_container (
+                                id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                                user_id BIGINT NOT NULL,
+                                container_id VARCHAR(100) NOT NULL,
+                                container_name VARCHAR(100),
+                                project_name VARCHAR(100),
+                                language VARCHAR(100),
+                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                FOREIGN KEY (user_id) REFERENCES users(id)
+);
+

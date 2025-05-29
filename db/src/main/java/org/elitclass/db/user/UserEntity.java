@@ -19,11 +19,6 @@ public class UserEntity extends BaseEntity {
     @Column(length = 100,unique = true, nullable = false)
     private String email;
 
-    @Column(length = 50,unique = true, nullable = false)
-    private String nickname;
-
-    private String statusContext;
-
     @Column(length = 100)
     private String payment;
 
