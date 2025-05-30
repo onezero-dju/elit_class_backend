@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebIDE Build Log Tester</title>
+</head>
+<body>
+<h2>🛠 WebIDE Build Log Tester</h2>
+<label>Container ID: <input id="containerId" placeholder="webIde-1-abc123..." size="40" /></label><br>
+<label>Project Name: <input id="projectName" placeholder="spring-boot-app" size="40" /></label><br><br>
+<button onclick="connect()">Connect & Build</button>
+<pre id="log" style="background:#111;color:#0f0;padding:10px;height:400px;overflow:auto;"></pre>
+
+<script>
+    let socket;
+
+    function connect() {
+        const containerId = document.getElementById("containerId").value.trim();
+        const projectName = document.getElementById("projectName").value.trim();
+        const log = document.getElementById("log");
+        log.textContent = "";
+
+        if (!containerId || !projectName) {
+            alert("컨테이너 ID와 프로젝트 이름을 입력하세요.");
+            return;
+        }
+
+        socket = new WebSocket(`ws://localhost:8080/ws/build/${containerId}`);
+
+        socket.onopen = () => {
+            log.textContent += "✅ Connected\n";
+            socket.send(projectName); // 빌드 시작
+        };
+
+        socket.onmessage = (event) => {
+            log.textContent += event.data;
+            log.scrollTop = log.scrollHeight;
+        };
+
+        socket.onerror = (err) => {
+            log.textContent += "\n❌ WebSocket error: " + err.message + "\n";
+        };
+
+        socket.onclose = () => {
+            log.textContent += "\n🔌 Connection closed.\n";
+        };
+    }
+</script>
+</body>
+</html>

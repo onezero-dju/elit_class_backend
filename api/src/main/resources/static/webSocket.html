@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web IDE Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <style>
+        body {
+            margin: 0;
+            background-color: #1e1e1e;
+            font-family: monospace;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #topbar {
+            padding: 10px;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #xterm-container {
+            flex-grow: 1;
+            background-color: black;
+        }
+
+        input {
+            padding: 5px;
+            font-family: monospace;
+        }
+
+        button {
+            padding: 6px 12px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005f99;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="topbar">
+        <label for="containerId">Container ID:</label>
+        <input type="text" id="containerId" placeholder="Enter Docker Container ID" />
+        <button onclick="connectWebSocket()">Connect</button>
+    </div>
+    <div id="xterm-container"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+<script>
+    let socket;
+    let commandBuffer = "";
+
+    const term = new Terminal({
+        cursorBlink: true,
+        fontFamily: 'monospace',
+        theme: {
+            background: '#000000',
+            foreground: '#00FF00'
+        }
+    });
+
+    term.open(document.getElementById('xterm-container'));
+    term.focus();
+
+    function connectWebSocket() {
+        const containerId = document.getElementById("containerId").value.trim();
+        if (!containerId) {
+            alert("Please enter a container ID.");
+            return;
+        }
+
+        const encodedId = encodeURIComponent(containerId);
+        socket = new WebSocket(`ws://localhost:8080/ws/terminal/${encodedId}`);
+
+        socket.onopen = () => {
+            term.write(`[Connected to container: ${containerId}]\r\n`);
+        };
+
+        socket.onmessage = (event) => {
+            const cleaned = event.data
+                .replace(/\x1B\[[0-9;]*[a-zA-Z]/g, '') // ANSI escape code 제거
+                .replace(/^\s+/gm, '');
+            term.write(event.data);
+        };
+
+        socket.onerror = (error) => {
+            term.write(`\r\n[WebSocket Error]\r\n`);
+            console.error("WebSocket error", error);
+        };
+
+        socket.onclose = () => {
+            term.write(`\r\n[Connection closed]\r\n`);
+        };
+    }
+
+    term.onData((data) => {
+        if (!socket || socket.readyState !== WebSocket.OPEN) return;
+
+        if (data === '\r') {
+            socket.send(commandBuffer + "\n");
+            commandBuffer = "";
+            term.write('\r\n');
+        } else if (data === '\u007F') { // 백스페이스
+            if (commandBuffer.length > 0) {
+                commandBuffer = commandBuffer.slice(0, -1);
+                term.write('\b \b');
+            }
+        } else {
+            commandBuffer += data;
+            term.write(data);
+        }
+    });
+</script>
+</body>
+</html>

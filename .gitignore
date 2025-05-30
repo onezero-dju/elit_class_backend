@@ -47,3 +47,10 @@ bin/
 .idea
 **/application.properties
 **/SocialClientRegistration.java
+
+/.idea/
+api/src/main/resources/application.yaml
+
+### project tmp ###
+tmp/
+

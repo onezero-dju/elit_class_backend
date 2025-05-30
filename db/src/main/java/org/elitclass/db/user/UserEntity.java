@@ -42,6 +42,7 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<LikesEntity> likes = List.of();
+}
 
 
 
@@ -51,30 +52,9 @@ public class UserEntity extends BaseEntity {
         @Column(length = 100)
         private String payment;
 
-        @Column(length = 50)
-        private String isCertified;
+    @Column(length = 50,nullable = false)
+    private String isCertified;
 
-
-        private Long classId;
-    */
-//    public void setProviderId(String providerId) {
-//        this.providerId = providerId;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//
-//    public void setName(String name) {
-//        this.nickname = name;
-//    }
-//
-//    public String getProvider() {
-//        return provider;
-//    }
-//
-//    public void setProvider(String provider) {
-//        this.provider = provider;
-//    }
+    @Column( nullable = false)
+    private Long classId;
 }
-

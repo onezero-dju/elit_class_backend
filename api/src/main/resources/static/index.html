@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web IDE Editor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.1/ace.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: monospace;
+            background-color: #1e1e1e;
+            color: white;
+        }
+        #topbar {
+            background-color: #333;
+            padding: 10px;
+        }
+        #workspace {
+            display: flex;
+            height: calc(100vh - 300px);
+        }
+        #file-tree {
+            width: 250px;
+            background-color: #2e2e2e;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        #editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        #editor {
+            flex: 1;
+            height: 100%;
+        }
+        #build-log {
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            height: 200px;
+            overflow: auto;
+        }
+        .file, .folder {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .folder {
+            font-weight: bold;
+        }
+        .selected {
+            background-color: #555;
+        }
+        input, button {
+            font-family: monospace;
+            margin: 2px;
+        }
+        button {
+            padding: 6px 10px;
+            background-color: #007acc;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005f99;
+        }
+    </style>
+</head>
+<body>
+
+<div id="topbar">
+    📦 Container ID: <input type="text" id="containerIdInput" placeholder="컨테이너 ID" />
+    📁 Project Name: <input type="text" id="projectNameInput" placeholder="프로젝트 이름" />
+    <button onclick="sendToServer()">🚀 업로드</button>
+    <button onclick="connectBuild()">🛠 Build</button>
+</div>
+
+<div id="workspace">
+    <div id="file-tree"></div>
+    <div id="editor-container">
+        <div id="editor">/* 파일을 선택해주세요 */</div>
+    </div>
+</div>
+
+<pre id="build-log"></pre>
+
+<script>
+    const editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/java");
+
+    let root = {
+        name: "project-root",
+        type: "folder",
+        children: [
+            {
+                name: "build.gradle",
+                type: "file",
+                content: `plugins {
+    id 'org.springframework.boot' version '3.1.3'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}`
+            },
+            {
+                name: "src",
+                type: "folder",
+                children: [
+                    {
+                        name: "main",
+                        type: "folder",
+                        children: [
+                            {
+                                name: "java",
+                                type: "folder",
+                                children: [
+                                    {
+                                        name: "com",
+                                        type: "folder",
+                                        children: [
+                                            {
+                                                name: "example",
+                                                type: "folder",
+                                                children: [
+                                                    {
+                                                        name: "demo",
+                                                        type: "folder",
+                                                        children: [
+                                                            {
+                                                                name: "DemoApplication.java",
+                                                                type: "file",
+                                                                content: `package com.example.demo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}`
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                name: "resources",
+                                type: "folder",
+                                children: [
+                                    {
+                                        name: "application.properties",
+                                        type: "file",
+                                        content: "server.port=8080"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
+
+    let selectedFile = null;
+    let buildSocket = null;
+
+    function renderTree() {
+        const tree = document.getElementById("file-tree");
+        tree.innerHTML = '';
+        appendNode(root, tree);
+    }
+
+    function appendNode(node, parentElement) {
+        const nodeElem = document.createElement("div");
+        nodeElem.className = node.type;
+        nodeElem.textContent = node.name;
+
+        nodeElem.onclick = (e) => {
+            e.stopPropagation();
+            if (node.type === "file") {
+                if (selectedFile) selectedFile.elem.classList.remove("selected");
+                selectedFile = { node, elem: nodeElem };
+                nodeElem.classList.add("selected");
+                editor.setValue(node.content || "", -1);
+            }
+        };
+
+        const actions = document.createElement("div");
+        if (node.type === "folder") {
+            const addFileBtn = document.createElement("button");
+            addFileBtn.textContent = "+F";
+            addFileBtn.onclick = (e) => {
+                e.stopPropagation();
+                const name = prompt("파일명:");
+                if (name) {
+                    node.children.push({ name, type: "file", content: "" });
+                    renderTree();
+                }
+            };
+            const addFolderBtn = document.createElement("button");
+            addFolderBtn.textContent = "+D";
+            addFolderBtn.onclick = (e) => {
+                e.stopPropagation();
+                const name = prompt("폴더명:");
+                if (name) {
+                    node.children.push({ name, type: "folder", children: [] });
+                    renderTree();
+                }
+            };
+            actions.append(addFileBtn, addFolderBtn);
+        }
+
+        nodeElem.appendChild(actions);
+        parentElement.appendChild(nodeElem);
+
+        if (node.type === "folder" && node.children) {
+            const subTree = document.createElement("div");
+            subTree.style.marginLeft = "15px";
+            node.children.forEach(child => appendNode(child, subTree));
+            parentElement.appendChild(subTree);
+        }
+    }
+
+    function sendToServer() {
+        if (selectedFile) {
+            selectedFile.node.content = editor.getValue();
+        }
+
+        const containerId = document.getElementById("containerIdInput").value.trim();
+        const projectName = document.getElementById("projectNameInput").value.trim();
+        if (!containerId || !projectName) return alert("Container ID와 프로젝트명을 입력하세요.");
+
+        const payload = {
+            container_id: containerId,
+            project_name: projectName,
+            files: root.children
+        };
+
+        fetch("http://localhost:8080/ide/down-file", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(() => alert("✅ 업로드 완료"))
+            .catch(err => alert("❌ 실패: " + err));
+    }
+
+    function connectBuild() {
+        const containerId = document.getElementById("containerIdInput").value.trim();
+        const projectName = document.getElementById("projectNameInput").value.trim();
+        const buildLog = document.getElementById("build-log");
+
+        if (!containerId || !projectName) {
+            alert("Container ID와 프로젝트명을 입력하세요.");
+            return;
+        }
+
+        if (buildSocket && buildSocket.readyState === WebSocket.OPEN) {
+            buildSocket.close();
+        }
+
+        buildSocket = new WebSocket(`ws://localhost:8080/ws/build/${containerId}`);
+
+        buildSocket.onopen = () => {
+            buildLog.textContent = "✅ WebSocket Connected. 빌드를 시작합니다...\n";
+            buildSocket.send(projectName);
+        };
+
+        buildSocket.onmessage = (event) => {
+            buildLog.textContent += event.data;
+            buildLog.scrollTop = buildLog.scrollHeight;
+        };
+
+        buildSocket.onerror = (event) => {
+            buildLog.textContent += "\n❌ WebSocket error\n";
+        };
+
+        buildSocket.onclose = () => {
+            buildLog.textContent += "\n🔌 WebSocket closed\n";
+        };
+    }
+
+    renderTree();
+</script>
+</body>
+</html>

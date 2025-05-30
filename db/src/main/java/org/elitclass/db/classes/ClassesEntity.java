@@ -4,14 +4,13 @@ package org.elitclass.db.classes;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
-
 import org.elitclass.db.BaseEntity;
 import org.elitclass.db.classes.enums.ClassStatus;
 import org.elitclass.db.lecture.LectureEntity;
 import org.elitclass.db.likes.LikesEntity;
 import org.elitclass.db.user.UserEntity;
+
+import java.util.List;
 
 @Table(name= "classes")
 @Entity
@@ -53,5 +52,11 @@ public class ClassesEntity extends BaseEntity {
     @OneToMany(mappedBy = "classes")
     @Builder.Default
     private List<LectureEntity> lecturesList = List.of();
+
+
+    private String Language;
+
+    private String Version;
+
 
 }
