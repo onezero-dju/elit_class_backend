@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WebIdeDeleteResponse {
+public class DeleteIdeResponse {
 
     private String containerId;
 

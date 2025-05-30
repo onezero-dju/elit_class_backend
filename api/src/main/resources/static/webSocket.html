@@ -76,22 +76,22 @@
     term.focus();
 
     function connectWebSocket() {
-        const containerId = document.getElementById("containerId").value;
+        const containerId = document.getElementById("containerId").value.trim();
         if (!containerId) {
             alert("Please enter a container ID.");
             return;
         }
 
-        socket = new WebSocket("ws://localhost:8080/ws/terminal");
+        const encodedId = encodeURIComponent(containerId);
+        socket = new WebSocket(`ws://localhost:8080/ws/terminal/${encodedId}`);
 
         socket.onopen = () => {
-
-            socket.send(containerId);  // 최초 메시지로 containerId 전달
+            term.write(`[Connected to container: ${containerId}]\r\n`);
         };
 
         socket.onmessage = (event) => {
             const cleaned = event.data
-                .replace(/\x1B\[[0-9;]*[a-zA-Z]/g, '')  // ANSI escape code 제거
+                .replace(/\x1B\[[0-9;]*[a-zA-Z]/g, '') // ANSI escape code 제거
                 .replace(/^\s+/gm, '');
             term.write(event.data);
         };
@@ -110,15 +110,13 @@
         if (!socket || socket.readyState !== WebSocket.OPEN) return;
 
         if (data === '\r') {
-            // 엔터 입력 시 커맨드 전체 전송
             socket.send(commandBuffer + "\n");
             commandBuffer = "";
             term.write('\r\n');
-        } else if (data === '\u007F') {
-            // 백스페이스 처리
+        } else if (data === '\u007F') { // 백스페이스
             if (commandBuffer.length > 0) {
                 commandBuffer = commandBuffer.slice(0, -1);
-                term.write('\b \b'); // 터미널에서 지우는 효과
+                term.write('\b \b');
             }
         } else {
             commandBuffer += data;

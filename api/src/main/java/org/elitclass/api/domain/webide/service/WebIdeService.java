@@ -3,10 +3,6 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.exception.NotFoundException;
-import com.github.dockerjava.api.model.ExposedPort;
-import com.github.dockerjava.api.model.HostConfig;
-import com.github.dockerjava.api.model.PortBinding;
-import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +26,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -44,7 +39,7 @@ public class WebIdeService {
 
 
     //TODO: 생성후 h2 데이터베이스에 추가
-    public UserContainerEntity createIdeWithJDK(CreateIdeWithJdkRequest request){
+    public CreateIdeWithJdkResponse createIdeWithJDK(CreateIdeWithJdkRequest request){
         try{
 
             UserEntity userId = userRepository.findById(request.getUserId()).orElseThrow(
@@ -73,62 +68,63 @@ public class WebIdeService {
                     .containerId(containerId)
                     .build();
 
-            //컨테이너 관련 정보 넘기기
             userContainerRepository.save(data);
 
 
-            return data;
+            return CreateIdeWithJdkResponse.builder()
+                    .containerName(containerName)
+                    .projectName(request.getProjectName())
+                    .build();
 
         }catch (Exception e){
-            log.error("Error creating ide",e);
             throw new DockerOperationException("Error creating ide", e);
         }
     }
 
     //생성 업그레이드 함수 나중에는 이거 사용해야함
     //TODO : 포트중복 최소화
-    public WebIdeCreateResponse createIde(Long userId){
-        int externalPort = new Random().ints(10000,11000).findFirst().orElseThrow();
-
-        CreateContainerResponse container = dockerClient.createContainerCmd("springboot-java17:latest")
-                .withName("webide-"+userId)
-                .withExposedPorts(new ExposedPort(8080))
-                .withHostConfig(HostConfig.newHostConfig()
-                        .withPortBindings(new PortBinding(
-                                Ports.Binding.bindPort(externalPort),
-                                new ExposedPort(8080)))
-                        .withAutoRemove(true)
-                )
-                .exec();
-
-        dockerClient.startContainerCmd(container.getId()).exec();
-        return WebIdeCreateResponse.builder()
-                .containerId(container.getId())
-                .userId(userId)
-                .build();
-    }
+//    public CreatIdeWithJdkResponse createIde(Long userId){
+//        int externalPort = new Random().ints(10000,11000).findFirst().orElseThrow();
+//
+//        CreateContainerResponse container = dockerClient.createContainerCmd("springboot-java17:latest")
+//                .withName("webIde-"+userId)
+//                .withExposedPorts(new ExposedPort(8080))
+//                .withHostConfig(HostConfig.newHostConfig()
+//                        .withPortBindings(new PortBinding(
+//                                Ports.Binding.bindPort(externalPort),
+//                                new ExposedPort(8080)))
+//                        .withAutoRemove(true)
+//                )
+//                .exec();
+//
+//        dockerClient.startContainerCmd(container.getId()).exec();
+//        return CreatIdeWithJdkResponse.builder()
+//                .containerId(container.getId())
+//                .userId(userId)
+//                .build();
+//    }
 
     //TODO: 컨테이너 조회
-     public List<GetWebIdeResponse> getWebIde(GetWebIdeRequest request){
-        UserEntity user = userRepository.findById(request.getUserId()).orElseThrow(
+     public List<GetWebIdeResponse> getWebIde(Long userId, Language language){
+        UserEntity user = userRepository.findById(userId).orElseThrow(
                 ()-> new ApiException(ErrorCode.BAD_REQUEST,"User not found")
         );
-        List<UserContainerEntity> containers = userContainerRepository.findAllByUserIdAndLanguage(user,request.getLanguage());
+        List<UserContainerEntity> containers = userContainerRepository.findAllByUserIdAndLanguage(user,language);
 
          return containers.stream()
                  .map(container->GetWebIdeResponse.builder()
                          .containerName(container.getContainerName())
+                         .containerId(container.getContainerId())
                          .projectName(container.getProjectName())
+                         .language(container.getLanguage())
                          .createdAt(container.getCreatedAt())
                          .updatedAt(container.getUpdatedAt())
                          .build()
          ).toList();
     }
 
-
-
     //컨테이너 삭제
-    public WebIdeDeleteResponse deleteIde(DeleteIdeRequest request) {
+    public DeleteIdeResponse deleteIde(DeleteIdeRequest request) {
 
         UserEntity user =userRepository.findById(request.getUserId()).orElseThrow(
                 ()-> new ApiException(ErrorCode.BAD_REQUEST,"User not found")
@@ -145,7 +141,7 @@ public class WebIdeService {
                     .withForce(true)
                     .exec();
 
-            WebIdeDeleteResponse response = WebIdeDeleteResponse.builder()
+            DeleteIdeResponse response = DeleteIdeResponse.builder()
                     .containerId(container.getContainerId())
                     .message("Deleted ide")
                     .build();
@@ -161,33 +157,30 @@ public class WebIdeService {
     }
 
     //containerId로 컨테이너 가동
-    //TODO: UserId로 컨테인너 아이디를 찾은 후 컨테이너 아이디를 맵핑
-    public WebIdeRunContainerResponse runIdeWithContainerId(String containerId){
-        containerId = containerId.replaceAll("^\"|\"$", "").trim();
-
-
-        try{
-            InspectContainerResponse info = dockerClient.inspectContainerCmd(containerId).exec();
-            if(!Boolean.TRUE.equals(info.getState().getRunning())){
-                dockerClient.startContainerCmd(containerId).exec();
-            }
-
-            return WebIdeRunContainerResponse.builder()
-                    .containerId(containerId)
-                    .containerName(info.getName())
-                    .status(info.getState().getStatus())
-                    .build();
-
-        }catch (NotFoundException e){
-            throw new ApiException(ErrorCode.BAD_REQUEST,e);
-        }catch(Exception e){
-            throw new ApiException(ErrorCode.SERVER_ERROR,e);
-        }
-    }
+//    //TODO: UserId로 컨테인너 아이디를 찾은 후 컨테이너 아이디를 맵핑
+//    public WebIdeRunContainerResponse runIdeWithContainerId(String containerId){
+//
+//        try{
+//            InspectContainerResponse info = dockerClient.inspectContainerCmd(containerId).exec();
+//            if(!Boolean.TRUE.equals(info.getState().getRunning())){
+//                dockerClient.startContainerCmd(containerId).exec();
+//            }
+//
+//            return WebIdeRunContainerResponse.builder()
+//                    .containerId(containerId)
+//                    .containerName(info.getName())
+//                    .status(info.getState().getStatus())
+//                    .build();
+//
+//        }catch (NotFoundException e){
+//            throw new ApiException(ErrorCode.BAD_REQUEST,e);
+//        }catch(Exception e){
+//            throw new ApiException(ErrorCode.SERVER_ERROR,e);
+//        }
+//    }
 
     public WebIdeBuildResponse saveFileTreeToContainer(FileUploadRequest request) throws IOException {
-        UUID uuid = UUID.randomUUID();
-        String projectName = uuid + "-" + request.projectName();
+        String projectName = request.projectName();
         Path projectPath = Paths.get("./tmp", projectName);
         ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         ByteArrayOutputStream stderr = new ByteArrayOutputStream();
@@ -251,32 +244,7 @@ public class WebIdeService {
             dockerClient.execStartCmd(chmodCmdId)
                     .exec(new ExecStartResultCallback(stdout, stderr))
                     .awaitCompletion();
-
-            // 4. Gradle Build
-            String buildCmdId = dockerClient.execCreateCmd(request.containerId())
-                    .withAttachStdout(true)
-                    .withAttachStderr(true)
-                    .withCmd("bash", "-c", "cd /usr/src/" + projectName + " && ./gradlew build --no-daemon")
-                    .exec()
-                    .getId();
-
-            dockerClient.execStartCmd(buildCmdId)
-                    .exec(new ExecStartResultCallback(stdout, stderr))
-                    .awaitCompletion();
-
-            // 5. Jar 실행
-            String runJarCmdId = dockerClient.execCreateCmd(request.containerId())
-                    .withAttachStdout(true)
-                    .withAttachStderr(true)
-                    .withCmd("bash", "-c", "java -jar /usr/src/" + projectName + "/build/libs/*0.0.1-SNAPSHOT.jar")
-                    .exec()
-                    .getId();
-
-            dockerClient.execStartCmd(runJarCmdId)
-                    .exec(new ExecStartResultCallback(stdout, stderr))
-                    .awaitCompletion();
-
-            // 6. 정리
+            // 4. 정리
             Files.delete(tarFile.toPath());
             deleteDirectoryRecursively(projectPath);
             

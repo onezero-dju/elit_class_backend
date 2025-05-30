@@ -1,13 +1,12 @@
 package org.elitclass.api.domain.webide.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.elitclass.db.usercontainer.enums.Language;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
 @Data
 public class GetWebIdeRequest {

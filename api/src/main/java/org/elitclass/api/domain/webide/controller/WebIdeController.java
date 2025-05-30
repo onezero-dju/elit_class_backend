@@ -1,16 +1,17 @@
 package org.elitclass.api.domain.webide.controller;
 
-import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.elitclass.api.api.Api;
 import org.elitclass.api.domain.webide.model.*;
 import org.elitclass.api.domain.webide.service.WebIdeService;
 import org.elitclass.api.error.ErrorCode;
-import org.elitclass.db.usercontainer.UserContainerEntity;
 import org.elitclass.db.usercontainer.enums.Language;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/ide")
 public class WebIdeController {
@@ -24,26 +25,27 @@ public class WebIdeController {
 
     //컨테이너 생성
     @PostMapping("/create")
-    public Api<UserContainerEntity> create(@RequestBody CreateIdeWithJdkRequest request) {
-        UserContainerEntity response=webIdeService.createIdeWithJDK(request);
+    public Api<CreateIdeWithJdkResponse> create(@RequestBody CreateIdeWithJdkRequest request) {
+        CreateIdeWithJdkResponse response=webIdeService.createIdeWithJDK (request);
 
+        return Api.OK(response);
+    }
+    @GetMapping("/get")
+    public Api<List<GetWebIdeResponse>> get(@RequestParam Long userId, Language language){
+
+        List<GetWebIdeResponse> response = webIdeService.getWebIde(userId,language);
         return Api.OK(response);
     }
 
     //컨테이너 삭제
     @PostMapping("/delete")
-    public Api<WebIdeDeleteResponse> delete(@RequestBody DeleteIdeRequest request) {
+    public Api<DeleteIdeResponse> delete(@RequestBody DeleteIdeRequest request) {
 
-        WebIdeDeleteResponse response = webIdeService.deleteIde(request);
-
-        return Api.OK(response);
-    }
-    @PostMapping("/run")
-    public Api<WebIdeRunContainerResponse> run(@RequestBody String containerId) {
-        WebIdeRunContainerResponse response = webIdeService.runIdeWithContainerId(containerId);
+        DeleteIdeResponse response = webIdeService.deleteIde(request);
 
         return Api.OK(response);
     }
+
 
 //    @PostMapping("/build")
 //    public Api<WebIdeBuildResponse> build(
@@ -54,7 +56,7 @@ public class WebIdeController {
 //        return Api.OK(response);
 //    }
 
-    @PostMapping("/down-file-build")
+    @PostMapping("/down-file")
     public Api<Object> saveTree(@RequestBody FileUploadRequest request) {
         try{
             System.out.println(request.projectName());

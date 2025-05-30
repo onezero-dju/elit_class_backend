@@ -1,6 +1,7 @@
 package org.elitclass.api.config.websocket;
 
 import jakarta.annotation.PostConstruct;
+import org.elitclass.api.domain.webide.WebIdeBuildLogWebSocket;
 import org.elitclass.api.domain.webide.WebIdeTerminalWebSocket;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,5 +21,10 @@ public class WebSocketConfig {
     @Bean
     public WebIdeTerminalWebSocket webIdeTerminalWebSocket() {
         return new WebIdeTerminalWebSocket();
+    }
+
+    @Bean
+    public WebIdeBuildLogWebSocket webIdeBuildLogWebSocket() {
+        return new WebIdeBuildLogWebSocket();
     }
 }

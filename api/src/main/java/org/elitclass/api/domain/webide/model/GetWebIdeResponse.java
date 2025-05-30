@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class GetWebIdeResponse {
     private String containerName;
+    private String containerId;
     private String projectName;
     private Language language;
     private LocalDateTime createdAt;
