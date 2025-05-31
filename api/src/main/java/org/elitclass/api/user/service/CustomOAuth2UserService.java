@@ -4,8 +4,6 @@ import org.elitclass.api.dto.CustomOAuth2User;
 import org.elitclass.api.dto.GoogleResponse;
 import org.elitclass.api.dto.NaverResponse;
 import org.elitclass.api.dto.OAuth2Response;
-import org.elitclass.api.error.ErrorCode;
-import org.elitclass.api.exception.ApiException;
 import org.elitclass.db.user.UserEntity;
 import org.elitclass.db.user.UserRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

@@ -46,7 +46,7 @@ public class UserEntity extends BaseEntity {
 
 
 
-    /*
+/*
         private String statusContext;
 
         @Column(length = 100)
@@ -58,3 +58,4 @@ public class UserEntity extends BaseEntity {
     @Column( nullable = false)
     private Long classId;
 }
+*/
