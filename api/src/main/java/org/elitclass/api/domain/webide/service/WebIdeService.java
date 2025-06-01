@@ -3,6 +3,10 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import com.github.dockerjava.api.exception.NotFoundException;
+import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.HostConfig;
+import com.github.dockerjava.api.model.PortBinding;
+import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +30,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Slf4j
@@ -40,6 +45,8 @@ public class WebIdeService {
 
     //TODO: 생성후 h2 데이터베이스에 추가
     public CreateIdeWithJdkResponse createIdeWithJDK(CreateIdeWithJdkRequest request){
+        int externalPort = new Random().ints(10000,11000).findFirst().orElseThrow();
+
         try{
 
             UserEntity userId = userRepository.findById(request.getUserId()).orElseThrow(
@@ -51,6 +58,12 @@ public class WebIdeService {
 
             CreateContainerResponse response = dockerClient.createContainerCmd("springboot-java17:latest")
                     .withName(containerName)
+                    .withExposedPorts(new ExposedPort(8080))
+                    .withHostConfig(HostConfig.newHostConfig()
+                        .withPortBindings(new PortBinding(
+                                Ports.Binding.bindPort(externalPort),
+                                new ExposedPort(8080)))
+                        .withAutoRemove(true))
                     .withTty(true)
                     .withCmd("tail","-f","/dev/null")
                     .exec();
@@ -72,7 +85,7 @@ public class WebIdeService {
 
 
             return CreateIdeWithJdkResponse.builder()
-                    .containerName(containerName)
+                    .containerId(containerId)
                     .projectName(request.getProjectName())
                     .build();
 
@@ -179,8 +192,20 @@ public class WebIdeService {
 //        }
 //    }
 
+
+    //TODO: UserId로 프로젝트 이름을 찾기 repository 만들기, 컨테이너 아이디 찾기
     public WebIdeBuildResponse saveFileTreeToContainer(FileUploadRequest request) throws IOException {
-        String projectName = request.projectName();
+
+        UserEntity userRef = userRepository.findById(request.userId()).orElseThrow(
+                ()-> new ApiException(ErrorCode.BAD_REQUEST,"User not found")
+        );
+
+        String containerId = userContainerRepository.findContainerIdProjectNameByUserIdAndLanguage(userRef,request.language()).getContainerId();
+
+        String projectName = userContainerRepository.findContainerIdProjectNameByUserIdAndLanguage(userRef,request.language()).getProjectName();
+
+
+        System.out.println(projectName);
         Path projectPath = Paths.get("./tmp", projectName);
         ByteArrayOutputStream stdout = new ByteArrayOutputStream();
         ByteArrayOutputStream stderr = new ByteArrayOutputStream();
@@ -216,13 +241,13 @@ public class WebIdeService {
 
         try {
             // 1. 압축 파일 컨테이너에 복사
-            dockerClient.copyArchiveToContainerCmd(request.containerId())
+            dockerClient.copyArchiveToContainerCmd(containerId)
                     .withHostResource(tarFile.getAbsolutePath())
                     .withRemotePath("/usr/src/")
                     .exec();
 
             // 2. 압축 해제
-            String extractCmdId = dockerClient.execCreateCmd(request.containerId())
+            String extractCmdId = dockerClient.execCreateCmd(containerId)
                     .withCmd("tar", "-xvf", "/usr/src/" + tarFile.getName(), "-C", "/usr/src")
                     .withAttachStdout(true)
                     .withAttachStderr(true)
@@ -234,7 +259,7 @@ public class WebIdeService {
                     .awaitCompletion();
 
             // 3. 실행 권한 부여
-            String chmodCmdId = dockerClient.execCreateCmd(request.containerId())
+            String chmodCmdId = dockerClient.execCreateCmd(containerId)
                     .withCmd("chmod", "+x", "/usr/src/" + projectName + "/gradlew")
                     .withAttachStdout(true)
                     .withAttachStderr(true)
@@ -249,7 +274,7 @@ public class WebIdeService {
             deleteDirectoryRecursively(projectPath);
             
             return WebIdeBuildResponse.builder()
-                    .containerId(request.containerId())
+                    .containerId(containerId)
                     .error(stderr.toString())
                     .output(stdout.toString())
                     .build();

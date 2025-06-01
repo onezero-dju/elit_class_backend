@@ -74,9 +74,11 @@
 <body>
 
 <div id="topbar">
-    📦 Container ID: <input type="text" id="containerIdInput" placeholder="컨테이너 ID" />
+    🙍 User ID: <input type="text" id="userIdInput" placeholder="사용자 ID" />
     📁 Project Name: <input type="text" id="projectNameInput" placeholder="프로젝트 이름" />
-    <button onclick="sendToServer()">🚀 업로드</button>
+    🌐 Language: <input type="text" id="languageInput" placeholder="언어 (예: java)" />
+    <button onclick="initializeContainer()">🚀 초기화</button>
+    <button onclick="sendToServer()">📤 업로드</button>
     <button onclick="connectBuild()">🛠 Build</button>
 </div>
 
@@ -94,6 +96,11 @@
     editor.setTheme("ace/theme/monokai");
     editor.session.setMode("ace/mode/java");
 
+    let selectedFile = null;
+    let containerId = null;
+    let buildSocket = null;
+
+    // ✅ 초기 파일 트리 구조
     let root = {
         name: "project-root",
         type: "folder",
@@ -117,7 +124,6 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -190,9 +196,6 @@ public class DemoApplication {
         ]
     };
 
-    let selectedFile = null;
-    let buildSocket = null;
-
     function renderTree() {
         const tree = document.getElementById("file-tree");
         tree.innerHTML = '';
@@ -226,6 +229,7 @@ public class DemoApplication {
                     renderTree();
                 }
             };
+
             const addFolderBtn = document.createElement("button");
             addFolderBtn.textContent = "+D";
             addFolderBtn.onclick = (e) => {
@@ -236,6 +240,7 @@ public class DemoApplication {
                     renderTree();
                 }
             };
+
             actions.append(addFileBtn, addFolderBtn);
         }
 
@@ -250,25 +255,42 @@ public class DemoApplication {
         }
     }
 
+    function initializeContainer() {
+        const userId = document.getElementById("userIdInput").value.trim();
+        const projectName = document.getElementById("projectNameInput").value.trim();
+        const language = document.getElementById("languageInput").value.trim();
+
+        if (!userId || !projectName || !language) return alert("모든 값을 입력해주세요.");
+
+        fetch("http://localhost:8080/ide/create", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, project_name: projectName, language })
+        })
+            .then(res => res.json())
+            .then(data => {
+                containerId = data.body?.container_id;
+                if (!containerId) {
+                    alert("❌ container_id를 응답에서 찾지 못했습니다.");
+                } else {
+                    alert("✅ 컨테이너가 초기화되었습니다.");
+                }
+            })
+            .catch(err => alert("초기화 실패: " + err));
+    }
+
     function sendToServer() {
+        const userId = document.getElementById("userIdInput").value.trim();
+        const projectName = document.getElementById("projectNameInput").value.trim();
         if (selectedFile) {
             selectedFile.node.content = editor.getValue();
         }
-
-        const containerId = document.getElementById("containerIdInput").value.trim();
-        const projectName = document.getElementById("projectNameInput").value.trim();
-        if (!containerId || !projectName) return alert("Container ID와 프로젝트명을 입력하세요.");
-
-        const payload = {
-            container_id: containerId,
-            project_name: projectName,
-            files: root.children
-        };
+        if (!containerId || !projectName) return alert("컨테이너를 먼저 초기화하세요.");
 
         fetch("http://localhost:8080/ide/down-file", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({ user_id: userId, language: "JAVA", files: root.children })
         })
             .then(res => res.json())
             .then(() => alert("✅ 업로드 완료"))
@@ -276,12 +298,11 @@ public class DemoApplication {
     }
 
     function connectBuild() {
-        const containerId = document.getElementById("containerIdInput").value.trim();
         const projectName = document.getElementById("projectNameInput").value.trim();
         const buildLog = document.getElementById("build-log");
 
         if (!containerId || !projectName) {
-            alert("Container ID와 프로젝트명을 입력하세요.");
+            alert("컨테이너를 먼저 초기화하세요.");
             return;
         }
 
@@ -301,7 +322,7 @@ public class DemoApplication {
             buildLog.scrollTop = buildLog.scrollHeight;
         };
 
-        buildSocket.onerror = (event) => {
+        buildSocket.onerror = () => {
             buildLog.textContent += "\n❌ WebSocket error\n";
         };
 
@@ -312,5 +333,6 @@ public class DemoApplication {
 
     renderTree();
 </script>
+
 </body>
 </html>

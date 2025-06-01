@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.elitclass.db.BaseEntity;
-import org.elitclass.db.user.enums.UserStatus;
 
 @Table(name= "users")
 @Entity

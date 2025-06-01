@@ -59,8 +59,7 @@ public class WebIdeController {
     @PostMapping("/down-file")
     public Api<Object> saveTree(@RequestBody FileUploadRequest request) {
         try{
-            System.out.println(request.projectName());
-            System.out.println(request.containerId());
+
             webIdeService.saveFileTreeToContainer(request);
             return Api.OK(request);
         } catch (IOException e) {

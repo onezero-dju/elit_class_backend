@@ -46,5 +46,5 @@ api/src/main/resources/application.yaml
 
 ### project tmp ###
 tmp/
-
 /.idea/
+/api/src/main/java/org/elitclass/api/oauth2/SocialClientRegistration.java
