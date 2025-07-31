@@ -24,6 +24,7 @@ public class ClassConverter {
                 .likes((long) classEntity.getLikeCount())
                 .views(classEntity.getViews())
                 .status("등록")
+                .imageUrl(classEntity.getImageUrl())
                 .lectureList(lectureList)
                 .build();
     }

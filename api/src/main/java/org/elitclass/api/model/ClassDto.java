@@ -14,6 +14,7 @@ public class ClassDto {
     private Long likes;
     private Long views;
     private String status;
+    private String imageUrl;
 
     @Builder.Default
     private List<LectureDto> lectureList = List.of();

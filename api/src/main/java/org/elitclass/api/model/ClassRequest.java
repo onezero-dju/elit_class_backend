@@ -22,6 +22,8 @@ import lombok.ToString;
 public class ClassRequest {
     private Long userId;
 
+    private String imageUrl;
+
     @Schema(description = "클래스 제목", example = "스프링 부트 강좌", required = true)
     @NotBlank(message = "클래스 제목은 필수 입력 사항입니다.")
     private String classTitle;

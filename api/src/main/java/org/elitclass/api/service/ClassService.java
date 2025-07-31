@@ -1,6 +1,7 @@
 package org.elitclass.api.service;
 
 import lombok.RequiredArgsConstructor;
+import org.elitclass.api.dto.CustomOAuth2User;
 import org.elitclass.api.model.ClassDto;
 import org.elitclass.api.model.ClassRequest;
 import org.elitclass.db.classes.ClassRepository;
@@ -29,10 +30,14 @@ public class ClassService {
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자 입니다. 로그인이 필요합니다.");
         }
-        String providerId = authentication.getName();
-        return userRepository.findByProviderId(providerId)
-                .orElseThrow( () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증된 사용자" + providerId + "를 찾을 수 없습니다."));
+        if(authentication.getPrincipal() instanceof CustomOAuth2User customUser) {
+            String providerId = customUser.getProviderId();
+            return userRepository.findByProviderId(providerId)
+                    .orElseThrow( () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증된 사용자" + providerId + "를 찾을 수 없습니다."));
+        }
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
+
 
     // Create(클래스 생성)
     public ClassDto create(ClassRequest classRequest, Authentication authentication) {
@@ -42,6 +47,7 @@ public class ClassService {
         ClassesEntity entity = ClassesEntity.builder()
                 .classTitle(classRequest.getClassTitle())
                 .description(classRequest.getDescription())
+                .imageUrl(classRequest.getImageUrl())
                 .likeCount(0L)
                 .views(0L)
                 .status(ClassStatus.REGISTERED)
@@ -106,5 +112,12 @@ public class ClassService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found"));
         entity.setStatus(ClassStatus.Report);
         classRepository.save(entity);
+    }
+
+    public List<ClassDto> getPopularClasses() {
+        List<ClassesEntity> entities = classRepository.findTop5ByOrderByLikesDesc();
+        return entities.stream()
+                .map(classConverter::toDto)
+                .collect(Collectors.toList());
     }
 } 

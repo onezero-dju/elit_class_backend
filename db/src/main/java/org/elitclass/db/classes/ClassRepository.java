@@ -9,4 +9,6 @@ import java.util.List;
 public interface ClassRepository extends JpaRepository<ClassesEntity, Long> {
     List<ClassesEntity> findAllByIdAndStatusOrderByIdDesc(Long id,ClassStatus status );
     List<LanguageVersionDTO> findLanguageVersionById(Long id);
+    List<ClassesEntity> findTop5ByOrderByLikesDesc();
+
 }

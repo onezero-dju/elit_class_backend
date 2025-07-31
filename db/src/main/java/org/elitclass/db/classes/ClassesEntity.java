@@ -45,6 +45,9 @@ public class ClassesEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ClassStatus status;
 
+    @Column(name = "image_url")
+    private  String imageUrl;
+
     @OneToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<LikesEntity> likes = List.of();
