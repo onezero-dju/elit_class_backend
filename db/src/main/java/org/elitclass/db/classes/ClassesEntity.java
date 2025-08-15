@@ -57,9 +57,9 @@ public class ClassesEntity extends BaseEntity {
     private List<LectureEntity> lecturesList = List.of();
 
 
-    private String Language;
+    private String language;
 
-    private String Version;
+    private String version;
 
 
 }

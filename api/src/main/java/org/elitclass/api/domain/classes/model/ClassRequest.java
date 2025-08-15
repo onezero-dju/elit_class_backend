@@ -29,5 +29,9 @@ public class ClassRequest {
     @Schema(description = "클래스 설명", example = "스프링 부트의 기초부터 심화까지 배우는 강좌입니다.")
     private String description;
 
+    private String language;
+
+    private String version;
+
     
 } 

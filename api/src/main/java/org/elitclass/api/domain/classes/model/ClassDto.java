@@ -19,6 +19,8 @@ public class ClassDto {
     private Long views;
     private String status;
     private String imageUrl;
+    private String language;
+    private String version;
 
     @Builder.Default
     private List<LectureDto> lectureList = List.of();
