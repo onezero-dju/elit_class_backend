@@ -3,6 +3,7 @@ package org.elitclass.api.domain.classes.service;
 import lombok.RequiredArgsConstructor;
 import org.elitclass.api.domain.classes.model.ClassDto;
 import org.elitclass.api.domain.classes.model.ClassRequest;
+import org.elitclass.api.dto.CustomOAuth2User;
 import org.elitclass.db.classes.ClassRepository;
 import org.elitclass.db.classes.ClassesEntity;
 import org.elitclass.db.classes.enums.ClassStatus;
@@ -29,7 +30,10 @@ public class ClassService {
         if (authentication == null || !authentication.isAuthenticated()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증되지 않은 사용자 입니다. 로그인이 필요합니다.");
         }
-        String providerId = authentication.getName();
+
+        CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
+        String providerId = principal.getProviderId();
+
         return userRepository.findByProviderId(providerId)
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증된 사용자" + providerId + "를 찾을 수 없습니다."));
     }
