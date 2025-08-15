@@ -33,7 +33,6 @@ public class ClassService {
 
         CustomOAuth2User principal = (CustomOAuth2User) authentication.getPrincipal();
         String providerId = principal.getProviderId();
-
         return userRepository.findByProviderId(providerId)
                 .orElseThrow( () -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "인증된 사용자" + providerId + "를 찾을 수 없습니다."));
     }

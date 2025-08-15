@@ -64,6 +64,12 @@ public class LectureService {
         lectureRepository.deleteById(id);
     }
 
+
+    public List<LectureDto> findByClassId(Long classId) {
+        return lectureRepository.findByClassIdOrderByOrderAsc(classId)
+                .stream().map(this::toDto).toList();
+    }
+
     // LectuerReport
 //    public void letureReport(Long id){
 //        var entity = lectureRepository.findById(id)

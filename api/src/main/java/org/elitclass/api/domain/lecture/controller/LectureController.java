@@ -27,7 +27,7 @@ public class LectureController {
             @ApiResponse(responseCode = "3200", description = "강의 생성 성공"),
             @ApiResponse(responseCode = "3404", description = "잘못된 요청")
     })
-    @GetMapping("/lecture")
+    @PostMapping("/lecture")
     public Api<LectureDto> create(@Valid @RequestBody LectureRequest request) {
         return Api.OK(lectureService.createLecture(request));
     }
@@ -73,6 +73,18 @@ public class LectureController {
         lectureService.lectureDelete(id);
         return Api.OK(null);
     }
+
+
+    @Operation(summary = "클래스의 강의 목록", description = "classId로 강의 목록을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "3200", description = "강의 목록 조회 성공"),
+            @ApiResponse(responseCode = "3404", description = "강의를 찾을 수 없음")
+    })
+    @GetMapping("/class/{classId}/lectures")
+    public Api<List<LectureDto>> findByClass(@PathVariable Long classId) {
+        return Api.OK(lectureService.findByClassId(classId));
+    }
+
 
 //    @Operation(summary = "강의 신고", description = "특정 강의를 신고합니다.")
 //    @ApiResponses(value = {
