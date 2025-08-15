@@ -19,6 +19,7 @@ public class UserRuleEntity extends BaseEntity {
 
     @Column(nullable = false)
     private Long userId;
+
     @Column(nullable = false)
     private Long ruleId;
 }

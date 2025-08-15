@@ -12,6 +12,8 @@ import org.elitclass.api.domain.webide.model.*;
 import org.elitclass.api.error.ErrorCode;
 import org.elitclass.api.exception.api.ApiException;
 import org.elitclass.api.exception.docker.DockerOperationException;
+import org.elitclass.db.classes.ClassRepository;
+import org.elitclass.db.classes.ClassesEntity;
 import org.elitclass.db.user.UserEntity;
 import org.elitclass.db.user.UserRepository;
 import org.elitclass.db.usercontainer.UserContainerEntity;
@@ -36,24 +38,43 @@ public class WebIdeService {
     private final DockerClient dockerClient;
     private final UserContainerRepository userContainerRepository;
     private final UserRepository userRepository;
+    private final ClassRepository classRepository;
 
 
     //TODO: 생성후 h2 데이터베이스에 추가
+    //컨테이너 생성
     public CreateIdeWithJdkResponse createIdeWithJDK(CreateIdeWithJdkRequest request){
         try{
+            ClassesEntity classes = classRepository.findById(request.getClassId()).orElseThrow(
+                    () -> new ApiException(ErrorCode.BAD_REQUEST,"Class not found")
+            );
+
 
             UserEntity userId = userRepository.findById(request.getUserId()).orElseThrow(
                     ()-> new ApiException(ErrorCode.BAD_REQUEST,"User not found")
             );
 
+            CreateContainerResponse response = null;
             String containerName = "webIde-"+request.getUserId()+"-"+UUID.randomUUID();
             //컨테이너 만들기
+            if(request.getLanguage() == Language.JAVA){
+                 response = dockerClient.createContainerCmd("springboot-java17:latest")
+                        .withName(containerName)
+                        .withTty(true)
+                        .withCmd("tail","-f","/dev/null")
+                        .exec();
+            }
+            else if(request.getLanguage() == Language.PYTHON){
+                 response = dockerClient.createContainerCmd("Python:latest")
+                        .withName(containerName)
+                        .withTty(true)
+                        .withCmd("tail","-f","/dev/null")
+                        .exec();
+            }
+            else{
+                throw new IllegalArgumentException("Language "+request.getLanguage()+" not supported");
+            }
 
-            CreateContainerResponse response = dockerClient.createContainerCmd("springboot-java17:latest")
-                    .withName(containerName)
-                    .withTty(true)
-                    .withCmd("tail","-f","/dev/null")
-                    .exec();
 
             //컨테이너 가동
             dockerClient.startContainerCmd(response.getId()).exec();
@@ -80,29 +101,6 @@ public class WebIdeService {
             throw new DockerOperationException("Error creating ide", e);
         }
     }
-
-    //생성 업그레이드 함수 나중에는 이거 사용해야함
-    //TODO : 포트중복 최소화
-//    public CreatIdeWithJdkResponse createIde(Long userId){
-//        int externalPort = new Random().ints(10000,11000).findFirst().orElseThrow();
-//
-//        CreateContainerResponse container = dockerClient.createContainerCmd("springboot-java17:latest")
-//                .withName("webIde-"+userId)
-//                .withExposedPorts(new ExposedPort(8080))
-//                .withHostConfig(HostConfig.newHostConfig()
-//                        .withPortBindings(new PortBinding(
-//                                Ports.Binding.bindPort(externalPort),
-//                                new ExposedPort(8080)))
-//                        .withAutoRemove(true)
-//                )
-//                .exec();
-//
-//        dockerClient.startContainerCmd(container.getId()).exec();
-//        return CreatIdeWithJdkResponse.builder()
-//                .containerId(container.getId())
-//                .userId(userId)
-//                .build();
-//    }
 
     //TODO: 컨테이너 조회
      public List<GetWebIdeResponse> getWebIde(Long userId, Language language){
