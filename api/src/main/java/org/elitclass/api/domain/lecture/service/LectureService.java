@@ -3,6 +3,7 @@ package org.elitclass.api.domain.lecture.service;
 import lombok.RequiredArgsConstructor;
 import org.elitclass.api.domain.lecture.model.LectureDto;
 import org.elitclass.api.domain.lecture.model.LectureRequest;
+import org.elitclass.db.classes.ClassRepository;
 import org.elitclass.db.lecture.LectureEntity;
 import org.elitclass.db.lecture.LectureRepository;
 import org.elitclass.db.user.UserRepository;
@@ -20,16 +21,20 @@ public class LectureService {
     private final LectureConverter lectureConverter;
     private final LectureRepository lectureRepository;
     private final UserRepository userRepository;
+    private final ClassRepository classesRepository;
 
     // Create(강의 생성)
     public LectureDto createLecture(LectureRequest lectureRequest) {
+        var classes = classesRepository.findById(lectureRequest.getClassId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found"));
 
-        LectureEntity entity = LectureEntity.builder()
+        var entity = LectureEntity.builder()
                 .lectureTitle(lectureRequest.getLectureTitle())
                 .context(lectureRequest.getContext())
+                .classes(classes) // ★ 반드시 세팅
                 .build();
 
-        LectureEntity saved = lectureRepository.save(entity);
+        var saved = lectureRepository.save(entity);
         return lectureConverter.toDto(saved);
     }
 
@@ -66,8 +71,10 @@ public class LectureService {
 
 
     public List<LectureDto> findByClassId(Long classId) {
-        return lectureRepository.findByClassIdOrderByOrderAsc(classId)
-                .stream().map(this::toDto).toList();
+        return lectureRepository.findByClasses_IdOrderByIdAsc(classId)
+                .stream()
+                .map(lectureConverter::toDto)
+                .toList();
     }
 
     // LectuerReport

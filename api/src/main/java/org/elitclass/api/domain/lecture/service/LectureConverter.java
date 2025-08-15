@@ -12,17 +12,17 @@ public class LectureConverter {
     
     private final PageConverter pageConverter;
 
-    public LectureDto toDto(LectureEntity lectureEntity) {
-        
-        var pageList = lectureEntity.getPageList().stream()
-            .map(pageConverter::toDto).toList();
-            
+    public LectureDto toDto(LectureEntity e) {
+        var pageList = e.getPageList().stream()
+                .map(pageConverter::toDto)
+                .toList();
+
         return LectureDto.builder()
-                .id(lectureEntity.getId())
-                .lectureTitle(lectureEntity.getLectureTitle())
-                .context(lectureEntity.getContext())
+                .id(e.getId())
+                .lectureTitle(e.getLectureTitle())
+                .context(e.getContext())
                 .pageList(pageList)
-                .classId(lectureEntity.getId())
+                .classId(e.getClasses() != null ? e.getClasses().getId() : null) // ← 여기 중요
                 .build();
     }
 }

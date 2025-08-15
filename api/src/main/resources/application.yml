@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/elit_class
+    url: jdbc:mysql://localhost:3306/eliteclass
     username: root
-    password: 1234
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   
   jpa:
