@@ -48,6 +48,8 @@ bin/
 **/application.properties
 **/SocialClientRegistration.java
 
+/api/src/main/resources/static/uploads
+
 /.idea/
 api/src/main/resources/application.yaml
 

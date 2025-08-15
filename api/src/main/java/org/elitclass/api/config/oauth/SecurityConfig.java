@@ -11,13 +11,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SecurityConfig implements WebMvcConfigurer{
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomClientRegistrationRepo customClientRegistrationRepo;
@@ -28,6 +35,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
         http.csrf((csrf) -> csrf.disable());
         http.formLogin((login) -> login.disable());
         http.httpBasic((httpBasic) -> httpBasic.disable());
@@ -37,11 +46,32 @@ public class SecurityConfig {
                 .userInfoEndpoint((userInfoEndpointConfig ->
                         userInfoEndpointConfig.userService(customOAuth2UserService)))
                 .successHandler(oAuth2SuccessHandler));
-
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers(antMatcher("/"), antMatcher("/open-api/**"), antMatcher("/login")).permitAll()
+                .requestMatchers("/", "/open-api/**", "/login",
+                        "/uploads/**", "/api/class/all","api/**").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();
     }
+
+
+
+    // CORS 설정 추가
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);  // 모든 경로에 대해 CORS 적용
+        return source;
+    }
+
+
+
+
 }

@@ -41,6 +41,9 @@ public class ClassesEntity extends BaseEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "status",nullable = false)
     @Enumerated(EnumType.STRING)
     private ClassStatus status;

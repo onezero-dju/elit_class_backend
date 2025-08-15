@@ -34,13 +34,14 @@ public class UserEntity extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
-
     @Column(length = 100)
     private String provider;
 
     @Column(length = 100)
     @JoinColumn(name = "provider_id")
     private String providerId;
+
+    private String profileImage;
 
 //    @Column(name = "is_certified",length = 50,nullable = false)
 //    private String isCertified;

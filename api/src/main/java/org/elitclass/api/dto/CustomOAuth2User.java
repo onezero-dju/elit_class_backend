@@ -40,13 +40,18 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return userEntity.getProviderId(); // providerId를 고유 식별자로 사용
+        return userEntity.getName(); // providerId를 고유 식별자로 사용
+    }
+
+    public String  getProviderId(){
+        return userEntity.getProviderId();
     }
 
     // OAuth2SuccessHandler에서 사용하기 위한 메서드
     public UserEntity getUserEntity() {
         return this.userEntity;
     }
+
 
     public String getEmail() {
         return userEntity.getEmail();
