@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>로그인 처리 중...</title>
+<body>
+<p>로그인 처리 중입니다...</p>
+<script>
+    (function(){
+        var params = new URLSearchParams(location.hash.substring(1));
+        var at = params.get("at");
+        if (at) localStorage.setItem("accessToken", decodeURIComponent(at));
+        localStorage.removeItem("refreshToken");
+
+        // 토큰 제거 후 메인 페이지로 이동
+        history.replaceState(null, "", "/");
+        location.href = "/";
+    })();
+</script>
+</body>
+</html>

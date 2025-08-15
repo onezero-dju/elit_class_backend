@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.elitclass.db.BaseEntity;
 import org.elitclass.db.likes.LikesEntity;
+import org.elitclass.db.user.enums.UserRole;
 
 import java.util.List;
 
@@ -22,11 +23,16 @@ import java.util.List;
 @SuperBuilder
 public class UserEntity extends BaseEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
     @Column(length = 100,unique = true, nullable = false)
     private String email;
 
     @Column(length = 50, nullable = false)
-    private String nickname;
+    private String name;
 
 
     @Column(length = 100)
@@ -39,23 +45,13 @@ public class UserEntity extends BaseEntity {
 //    @Column(name = "is_certified",length = 50,nullable = false)
 //    private String isCertified;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private UserRole role;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<LikesEntity> likes = List.of();
 }
 
 
-
-/*
-        private String statusContext;
-
-        @Column(length = 100)
-        private String payment;
-
-    @Column(length = 50,nullable = false)
-    private String isCertified;
-
-    @Column( nullable = false)
-    private Long classId;
-}
-*/

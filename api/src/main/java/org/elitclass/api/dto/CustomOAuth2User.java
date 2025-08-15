@@ -1,5 +1,6 @@
 package org.elitclass.api.dto;
 
+import org.elitclass.db.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -9,28 +10,29 @@ import java.util.Map;
 
 public class CustomOAuth2User implements OAuth2User {
 
-    private final OAuth2Response oAuth2Response;
-    private final String role;
+    // UserEntity를 직접 포함하도록 수정
+    private final UserEntity userEntity;
+    private final Map<String, Object> attributes;
 
-    public CustomOAuth2User(OAuth2Response oAuth2Response, String role) {
-        this.oAuth2Response = oAuth2Response;
-        this.role = role;
+    // 역할(Role)도 UserEntity에서 직접 가져올 수 있습니다.
+
+    public CustomOAuth2User(UserEntity userEntity, Map<String, Object> attributes) {
+        this.userEntity = userEntity;
+        this.attributes = attributes;
     }
 
     @Override
     public Map<String, Object> getAttributes() {
-        return Map.of();
+        return this.attributes;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         Collection<GrantedAuthority> collection = new ArrayList<>();
         collection.add(new GrantedAuthority() {
-
             @Override
             public String getAuthority() {
-                return role;
+                return String.valueOf(userEntity.getRole()); // UserEntity에서 역할 가져오기
             }
         });
         return collection;
@@ -38,20 +40,15 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return oAuth2Response.getName();
+        return userEntity.getProviderId(); // providerId를 고유 식별자로 사용
     }
 
-    public String getProvider() {
-        return oAuth2Response.getProvider();
+    // OAuth2SuccessHandler에서 사용하기 위한 메서드
+    public UserEntity getUserEntity() {
+        return this.userEntity;
     }
-
-    public String getProviderId() {
-        return oAuth2Response.getProviderId();
-    }
-
 
     public String getEmail() {
-        return oAuth2Response.getEmail();
+        return userEntity.getEmail();
     }
-
 }
