@@ -91,4 +91,11 @@ public class ClassController {
     public Api<List<ClassDto>> popular() {
         return  Api.OK(classService.popular());
     }
+
+    @Operation(summary = "관리자 추천 클래스", description = "관리자가 만든 인기 클래스 Top3")
+    @GetMapping("/class/admin-list")
+    public Api<List<ClassDto>> adminList() {
+        return Api.OK(classService.adminList());
+    }
+
 } 

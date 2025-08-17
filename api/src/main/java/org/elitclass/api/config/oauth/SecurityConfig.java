@@ -1,10 +1,14 @@
 package org.elitclass.api.config.oauth;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.elitclass.api.cookie.CookieUtil;
+import org.elitclass.api.dto.CustomOAuth2User;
 import org.elitclass.api.oauth2.CustomClientRegistrationRepo;
 import org.elitclass.api.oauth2.CustomOAuth2AuthorizedClientService;
 import org.elitclass.api.oauth2.handler.OAuth2SuccessHandler; // Import 추가
 import org.elitclass.api.user.service.CustomOAuth2UserService;
+import org.elitclass.db.usertoken.UserTokenRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,6 +35,7 @@ public class SecurityConfig implements WebMvcConfigurer{
     private final CustomOAuth2AuthorizedClientService customOAuth2AuthorizedClientService;
     private final JdbcTemplate jdbcTemplate;
     private final OAuth2SuccessHandler oAuth2SuccessHandler; // 주입 추가
+    private final UserTokenRepository userTokenRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,9 +51,22 @@ public class SecurityConfig implements WebMvcConfigurer{
                 .userInfoEndpoint((userInfoEndpointConfig ->
                         userInfoEndpointConfig.userService(customOAuth2UserService)))
                 .successHandler(oAuth2SuccessHandler));
+
+        http.logout(logout -> logout
+                .logoutUrl("/logout")
+                .deleteCookies("accessToken", "refreshToken") // 브라우저에 바로 만료 Set-Cookie
+                .logoutSuccessHandler((req, res, auth) -> {
+                    // (선택) DB의 refreshToken도 제거
+                    if (auth != null && auth.getPrincipal() instanceof CustomOAuth2User u) {
+                        userTokenRepository.findByUser(u.getUserEntity())
+                                .ifPresent(userTokenRepository::delete);
+                    }
+                })
+        );
+
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers("/", "/open-api/**", "/login",
-                        "/uploads/**", "/api/class/all","api/**").permitAll()
+                        "/uploads/**", "/api/class/all","/api/**","/api/user", "/oauth2/**").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();

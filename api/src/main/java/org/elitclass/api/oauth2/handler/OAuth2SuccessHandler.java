@@ -99,6 +99,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtProvider jwtProvider;
     private final UserTokenRepository userTokenRepository;
 
+
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request,
@@ -120,11 +121,18 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 () -> userTokenRepository.save(UserTokenEntity.builder().user(user).refreshToken(refreshToken).build())
         );
 
-        // URL 인코딩
-        String at = java.net.URLEncoder.encode(accessToken, java.nio.charset.StandardCharsets.UTF_8);
-        String rt = java.net.URLEncoder.encode(refreshToken, java.nio.charset.StandardCharsets.UTF_8);
 
-        // HTML 파일로 리다이렉트 (localhost:8080/callback.html)
-        response.sendRedirect("http://localhost:8080/callback.html#at=" + at + "&rt=" + rt);
+        CookieUtil.addJwtCookie(response, "accessToken",  accessToken,  60 * 30);           // 30분
+        CookieUtil.addJwtCookie(response, "refreshToken", refreshToken, 60 * 60 * 24 * 30); // 30일
+
+        response.sendRedirect("http://localhost:5173/");
+
+
+//        // URL 인코딩
+//        String at = java.net.URLEncoder.encode(accessToken, java.nio.charset.StandardCharsets.UTF_8);
+//        String rt = java.net.URLEncoder.encode(refreshToken, java.nio.charset.StandardCharsets.UTF_8);
+//
+//        // HTML 파일로 리다이렉트 (localhost:8080/callback.html)
+//        response.sendRedirect("http://localhost:8080/login/callback#at=" + at + "&rt=" + rt);
     }
 }

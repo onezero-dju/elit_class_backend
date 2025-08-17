@@ -9,6 +9,7 @@ import org.elitclass.db.classes.ClassesEntity;
 import org.elitclass.db.classes.enums.ClassStatus;
 import org.elitclass.db.user.UserRepository;
 import org.elitclass.db.user.UserEntity;
+import org.elitclass.db.user.enums.UserRole;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -116,6 +117,13 @@ public class ClassService {
         List<ClassesEntity> list =
                 classRepository.findTop5ByStatusOrderByLikeCountDescIdDesc(
                         ClassStatus.REGISTERED);
+        return list.stream().map(classConverter::toDto).toList();
+    }
+
+    public List<ClassDto> adminList() {
+        var list = classRepository
+                .findTop3ByUser_RoleAndStatusOrderByLikeCountDescIdDesc(
+                        UserRole.ADMIN, ClassStatus.REGISTERED);
         return list.stream().map(classConverter::toDto).toList();
     }
 } 
