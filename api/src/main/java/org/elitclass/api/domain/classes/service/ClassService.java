@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ClassService {
-    
+
     private final ClassRepository classRepository;
     private final ClassConverter classConverter;
     private final UserRepository userRepository;
@@ -152,7 +152,6 @@ public class ClassService {
         // 연관관계(@ManyToOne user)라면 ↓ 로 변경
         // return classRepository.existsByIdAndUser_Id(classId, userId);
     }
-}
 
     public List<ClassDto> adminList() {
         var list = classRepository
@@ -160,4 +159,6 @@ public class ClassService {
                         UserRole.ADMIN, ClassStatus.REGISTERED);
         return list.stream().map(classConverter::toDto).toList();
     }
+
 }
+

@@ -11,6 +11,7 @@ import org.elitclass.api.user.service.CustomOAuth2UserService;
 import org.elitclass.db.usertoken.UserTokenRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +22,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.File;
+import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.List;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
@@ -65,11 +69,21 @@ public class SecurityConfig implements WebMvcConfigurer{
         );
 
         http.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/", "/open-api/**", "/login",
-                        "/uploads/**", "/api/class/all","/api/**","/api/user", "/oauth2/**").permitAll()
+                .requestMatchers("/", "/open-api/**", "/login","/uploads/**",
+                        "api/image/uploads/**", "/api/class/all","/api/**","/api/user", "/oauth2/**", "/api/class/*").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        String uploadAbsPath = Paths.get(System.getProperty("user.dir"), "uploads")
+                .toAbsolutePath().toString() + File.separator;
+
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + uploadAbsPath)
+                .setCacheControl(CacheControl.maxAge(Duration.ofHours(1)).cachePublic());
     }
 
 
@@ -82,7 +96,7 @@ public class SecurityConfig implements WebMvcConfigurer{
         config.setAllowedOrigins(List.of("http://localhost:5173"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);  // 모든 경로에 대해 CORS 적용

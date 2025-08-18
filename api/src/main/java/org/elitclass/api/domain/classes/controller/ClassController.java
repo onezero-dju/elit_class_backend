@@ -109,10 +109,6 @@ public class ClassController {
         return Api.OK(classService.isOwner(authentication, id));
     }
 
-
-
-
-
     @Operation(summary = "관리자 추천 클래스", description = "관리자가 만든 인기 클래스 Top3")
     @GetMapping("/class/admin-list")
     public Api<List<ClassDto>> adminList() {
