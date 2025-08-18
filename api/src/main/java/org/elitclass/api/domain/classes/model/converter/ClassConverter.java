@@ -18,6 +18,8 @@ public class ClassConverter {
         var lectureList = classEntity.getLecturesList().stream()
             .map(lectureConverter::toDto).toList();
 
+        Long userId = classEntity.getUser() != null ? classEntity.getUser().getId() : null;
+
         return ClassDto.builder()
                 .id(classEntity.getId())
                 .classTitle(classEntity.getClassTitle())
@@ -26,6 +28,9 @@ public class ClassConverter {
                 .views(classEntity.getViews())
                 .status(classEntity.getStatus())
                 .imageUrl(classEntity.getImageUrl())
+                .language(classEntity.getLanguage())
+                .version(classEntity.getVersion())
+                .userId(userId)
                 .lectureList(lectureList)
                 .language(classEntity.getLanguage())
                 .version(classEntity.getVersion())
@@ -44,5 +49,11 @@ public class ClassConverter {
                 .language(classDto.getLanguage())
                 .version(classDto.getVersion())
                 .build();
+    }
+
+    public ClassDto toDto(ClassesEntity e, boolean isOwner) {
+        ClassDto dto = toDto(e);
+        if (dto != null) dto.setOwner(isOwner);
+        return dto;
     }
 } 

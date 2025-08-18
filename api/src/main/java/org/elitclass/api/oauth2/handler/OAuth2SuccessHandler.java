@@ -98,6 +98,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private final JwtProvider jwtProvider;
     private final UserTokenRepository userTokenRepository;
 
+
     @Override
     public void onAuthenticationSuccess(
             HttpServletRequest request,
@@ -118,6 +119,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 t -> { t.setRefreshToken(refreshToken); userTokenRepository.save(t); },
                 () -> userTokenRepository.save(UserTokenEntity.builder().user(user).refreshToken(refreshToken).build())
         );
+
+
+//        CookieUtil.addJwtCookie(response, "accessToken",  accessToken,  60 * 30);           // 30분
+//        CookieUtil.addJwtCookie(response, "refreshToken", refreshToken, 60 * 60 * 24 * 30); // 30일
+//
+//        response.sendRedirect("http://localhost:5173/");
+//
 
         // URL 인코딩
         String at = java.net.URLEncoder.encode(accessToken, java.nio.charset.StandardCharsets.UTF_8);
