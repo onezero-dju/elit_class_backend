@@ -60,6 +60,7 @@ public class ClassController {
         @ApiResponse(responseCode = "2404", description = "클래스를 찾을 수 없음"),
         @ApiResponse(responseCode = "2400", description = "잘못된 요청")
     })
+
     @PutMapping("/class/correction/{id}")
     public Api<ClassDto> update(@PathVariable Long id, @RequestBody ClassRequest request, Authentication authentication) {
         return Api.OK(classService.update(id, request, authentication));

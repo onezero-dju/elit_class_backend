@@ -1,4 +1,4 @@
-package org.elitclass.api.dto;
+package org.elitclass.api.domain.user.dto;
 
 public interface OAuth2Response {
 

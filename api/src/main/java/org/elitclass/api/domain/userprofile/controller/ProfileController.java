@@ -1,6 +1,7 @@
 package org.elitclass.api.domain.userprofile.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.elitclass.api.domain.user.service.CustomOAuth2UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mypage")
 public class ProfileController {
 
-    private final org.elitclass.api.user.service.CustomOAuth2UserService userService;
+    private final CustomOAuth2UserService userService;
 
 
 

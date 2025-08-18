@@ -9,6 +9,7 @@ import org.elitclass.db.classes.enums.ClassStatus;
 import org.elitclass.db.lecture.LectureEntity;
 import org.elitclass.db.likes.LikesEntity;
 import org.elitclass.db.user.UserEntity;
+import org.elitclass.db.usercontainer.enums.Language;
 
 import java.util.List;
 
@@ -55,7 +56,6 @@ public class ClassesEntity extends BaseEntity {
     @OneToMany(mappedBy = "classes")
     @Builder.Default
     private List<LectureEntity> lecturesList = List.of();
-
 
     private String language;
 

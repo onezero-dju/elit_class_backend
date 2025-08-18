@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateIdeWithJdkResponse {
+    private String containerId;
     private String containerName;
     private String projectName;
 }

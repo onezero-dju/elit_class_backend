@@ -1,8 +1,10 @@
 package org.elitclass.api.domain.classes.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.elitclass.api.domain.classes.model.ClassDto;
 import org.elitclass.api.domain.classes.model.ClassRequest;
+import org.elitclass.api.domain.classes.model.converter.ClassConverter;
 import org.elitclass.db.classes.ClassRepository;
 import org.elitclass.db.classes.ClassesEntity;
 import org.elitclass.db.classes.enums.ClassStatus;

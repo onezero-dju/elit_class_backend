@@ -78,8 +78,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.elitclass.api.cookie.CookieUtil;
-import org.elitclass.api.dto.CustomOAuth2User;
+
+import org.elitclass.api.domain.user.dto.CustomOAuth2User;
 import org.elitclass.api.jwt.JwtProvider;
 import org.elitclass.db.user.UserEntity;
 import org.elitclass.db.usertoken.UserTokenEntity;
@@ -89,7 +89,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Slf4j
 @Component

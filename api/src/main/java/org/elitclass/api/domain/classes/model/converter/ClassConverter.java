@@ -1,4 +1,4 @@
-package org.elitclass.api.domain.classes.service;
+package org.elitclass.api.domain.classes.model.converter;
 
 import org.elitclass.api.domain.classes.model.ClassDto;
 import org.elitclass.api.domain.lecture.service.LectureConverter;
@@ -24,9 +24,25 @@ public class ClassConverter {
                 .description(classEntity.getDescription())
                 .likes(classEntity.getLikeCount())
                 .views(classEntity.getViews())
-                .status("등록")
+                .status(classEntity.getStatus())
                 .imageUrl(classEntity.getImageUrl())
                 .lectureList(lectureList)
+                .language(classEntity.getLanguage())
+                .version(classEntity.getVersion())
+                .build();
+    }
+    public ClassesEntity toEntity(ClassDto classDto) {
+
+        return ClassesEntity.builder()
+                .id(classDto.getId())
+                .classTitle(classDto.getClassTitle())
+                .description(classDto.getDescription())
+                .likeCount(classDto.getLikes())
+                .views(classDto.getViews())
+                .status(classDto.getStatus())
+                .imageUrl(classDto.getImageUrl())
+                .language(classDto.getLanguage())
+                .version(classDto.getVersion())
                 .build();
     }
 } 

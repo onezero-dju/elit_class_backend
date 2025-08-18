@@ -1,8 +1,10 @@
 package org.elitclass.api.domain.webide.service;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerResponse;
-import com.github.dockerjava.api.command.InspectContainerResponse;
+
 import com.github.dockerjava.api.exception.NotFoundException;
+import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,10 +60,18 @@ public class WebIdeService {
             String containerName = "webIde-"+request.getUserId()+"-"+UUID.randomUUID();
             //컨테이너 만들기
             if(request.getLanguage() == Language.JAVA){
-                 response = dockerClient.createContainerCmd("springboot-java17:latest")
+                ExposedPort tcp8080 = ExposedPort.tcp(8080);
+
+// 호스트와 매핑할 포트 (예: 호스트 8081 → 컨테이너 8080)
+                Ports portBindings = new Ports();
+                portBindings.bind(tcp8080, Ports.Binding.empty());
+
+                 response = dockerClient.createContainerCmd("spring:latest")
                         .withName(containerName)
                         .withTty(true)
                         .withCmd("tail","-f","/dev/null")
+                         .withExposedPorts(tcp8080)
+                         .withPortBindings(portBindings)
                         .exec();
             }
             else if(request.getLanguage() == Language.PYTHON){
@@ -81,18 +91,8 @@ public class WebIdeService {
 
             var containerId = dockerClient.inspectContainerCmd(response.getId()).exec().getId();
 
-            var data =UserContainerEntity.builder()
-                    .userId(userId)
-                    .containerName(containerName)
-                    .projectName(request.getProjectName())
-                    .language(Language.JAVA)
-                    .containerId(containerId)
-                    .build();
-
-            userContainerRepository.save(data);
-
-
             return CreateIdeWithJdkResponse.builder()
+                    .containerId(containerId)
                     .containerName(containerName)
                     .projectName(request.getProjectName())
                     .build();

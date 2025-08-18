@@ -1,4 +1,4 @@
-package org.elitclass.api.dto;
+package org.elitclass.api.domain.user.dto;
 
 import org.elitclass.db.user.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +40,7 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return userEntity.getName(); // providerId를 고유 식별자로 사용
+        return userEntity.getProviderId(); // providerId를 고유 식별자로 사용
     }
 
     public String  getProviderId(){

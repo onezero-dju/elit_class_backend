@@ -43,10 +43,10 @@ public class WebIdeTerminalWebSocket {
                 @Override
                 public void onNext(Frame frame) {
                     try {
-                        String output = new String(frame.getPayload(), StandardCharsets.UTF_8)
-                                .replaceAll("\\e\\[[\\d;]*[^\\d;]", "")
-                                .replaceAll("^[ \t]+", "");
+                        // ANSI 시퀀스 포함 원본 그대로 전달
+                        String output = new String(frame.getPayload(), StandardCharsets.UTF_8);
                         session.getBasicRemote().sendText(output);
+                        // 필요하면 바이너리로도 가능: session.getBasicRemote().sendBinary(ByteBuffer.wrap(frame.getPayload()));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

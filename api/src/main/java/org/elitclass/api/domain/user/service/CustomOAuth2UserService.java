@@ -1,9 +1,9 @@
-package org.elitclass.api.user.service;
+package org.elitclass.api.domain.user.service;
 
-import org.elitclass.api.dto.CustomOAuth2User;
-import org.elitclass.api.dto.GoogleResponse;
-import org.elitclass.api.dto.NaverResponse;
-import org.elitclass.api.dto.OAuth2Response;
+import org.elitclass.api.domain.user.dto.CustomOAuth2User;
+import org.elitclass.api.domain.user.dto.GoogleResponse;
+import org.elitclass.api.domain.user.dto.NaverResponse;
+import org.elitclass.api.domain.user.dto.OAuth2Response;
 import org.elitclass.db.user.UserEntity;
 import org.elitclass.db.user.UserRepository;
 import org.elitclass.db.user.enums.UserRole;
