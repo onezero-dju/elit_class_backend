@@ -1,23 +1,23 @@
 package org.elitclass.api.domain.lecture.service;
 
 import lombok.RequiredArgsConstructor;
-import org.elitclass.api.domain.classes.model.ClassDto;
+
 import org.elitclass.api.domain.lecture.model.LectureDto;
 import org.elitclass.api.domain.lecture.model.LectureRequest;
-import org.elitclass.api.dto.CustomOAuth2User;
+
 import org.elitclass.db.classes.ClassRepository;
-import org.elitclass.db.classes.ClassesEntity;
+
 import org.elitclass.db.lecture.LectureEntity;
 import org.elitclass.db.lecture.LectureRepository;
-import org.elitclass.db.user.UserEntity;
+
 import org.elitclass.db.user.UserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.function.Function;
+
 import java.util.stream.Collectors;
 
 @Service

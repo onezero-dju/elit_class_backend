@@ -1,11 +1,11 @@
 package org.elitclass.api.domain.user;
 
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.Builder;
-import lombok.Getter;
+
+
 import lombok.RequiredArgsConstructor;
 import org.elitclass.api.cookie.CookieUtil;
-import org.elitclass.api.dto.CustomOAuth2User;
+
 import org.elitclass.api.jwt.JwtProvider;
 import org.elitclass.db.user.UserEntity;
 import org.elitclass.db.user.UserRepository;
