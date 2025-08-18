@@ -5,15 +5,15 @@
 <body>
 <p>로그인 처리 중입니다...</p>
 <script>
-    (function(){
-        var params = new URLSearchParams(location.hash.substring(1));
-        var at = params.get("at");
-        if (at) localStorage.setItem("accessToken", decodeURIComponent(at));
-        //localStorage.removeItem("refreshToken");
-
-        // 토큰 제거 후 메인 페이지로 이동
-        history.replaceState(null, "", "/");
-        location.href = "http://localhost:5173/";
+    (function () {
+        // 8080에 저장하지 말고, 받은 해시(#at=...&rt=...)를 그대로 5173으로 넘깁니다.
+        var hash = window.location.hash || "";
+        if (hash && hash.length > 1) {
+            // 5173의 /callback 라우트에서 localStorage에 저장하도록 위임
+            window.location.replace("http://localhost:5173/callback" + hash);
+        } else {
+            window.location.replace("http://localhost:5173/");
+        }
     })();
 </script>
 </body>
