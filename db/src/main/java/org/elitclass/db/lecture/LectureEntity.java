@@ -28,7 +28,7 @@ public class LectureEntity extends BaseEntity {
     @Column(name = "lecture_title", length = 50, nullable = false)
     private String lectureTitle;
 
-    @Column(name = "context", nullable = false)
+    @Column(name = "context", nullable = false, columnDefinition = "MEDIUMTEXT")
     private String context;
 
     @ToString.Exclude
@@ -39,4 +39,6 @@ public class LectureEntity extends BaseEntity {
     @OneToMany(mappedBy = "lecture")
     @Builder.Default
     private List<PageEntity> pageList = List.of();
-}
+
+    @Column(name = "is_ide")
+    private Boolean isIde;}

@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Tag(name = "Class", description = "클래스 관리 API")
 @RestController
@@ -92,10 +94,29 @@ public class ClassController {
         return  Api.OK(classService.popular());
     }
 
+    @Operation(summary = "내 클래스 조회", description = "로그인 사용자가 작성한 클래스만 조회합니다.")
+    @ApiResponse(responseCode = "2200", description = "클래스 목록 조회 성공")
+    @GetMapping("/class/mine")
+    public Api<List<ClassDto>> viewMine(Authentication authentication) {
+        return Api.OK(classService.viewMine(authentication));
+    }
+
+    @Operation(summary = "클래스 소유자 비교", description = "로그인 사용자와 클래스 소유자를 비교합니다.")
+    @ApiResponse(responseCode = "2200", description = "클래스 소유자 비교 성공")
+    @GetMapping("/class/{id}/isowner")
+    public Api<Boolean> isowner(@PathVariable Long id,
+                                Authentication authentication) {;
+        return Api.OK(classService.isOwner(authentication, id));
+    }
+
+
+
+
+
     @Operation(summary = "관리자 추천 클래스", description = "관리자가 만든 인기 클래스 Top3")
     @GetMapping("/class/admin-list")
     public Api<List<ClassDto>> adminList() {
         return Api.OK(classService.adminList());
     }
 
-} 
+}

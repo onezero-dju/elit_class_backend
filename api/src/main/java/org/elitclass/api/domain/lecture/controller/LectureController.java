@@ -10,6 +10,7 @@ import org.elitclass.api.api.Api;
 import org.elitclass.api.domain.lecture.model.LectureDto;
 import org.elitclass.api.domain.lecture.model.LectureRequest;
 import org.elitclass.api.domain.lecture.service.LectureService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -86,6 +87,7 @@ public class LectureController {
     }
 
 
+
 //    @Operation(summary = "강의 신고", description = "특정 강의를 신고합니다.")
 //    @ApiResponses(value = {
 //            @ApiResponse(responseCode = "3200", description = "강의 신고 성공"),
@@ -96,6 +98,7 @@ public class LectureController {
 //        lectureService.lectureReport(id);
 //        return Api.OK(null);
 //    }
+
 
 }
 

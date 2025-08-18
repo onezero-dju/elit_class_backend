@@ -18,6 +18,8 @@ public class ClassConverter {
         var lectureList = classEntity.getLecturesList().stream()
             .map(lectureConverter::toDto).toList();
 
+        Long userId = classEntity.getUser() != null ? classEntity.getUser().getId() : null;
+
         return ClassDto.builder()
                 .id(classEntity.getId())
                 .classTitle(classEntity.getClassTitle())
@@ -26,7 +28,16 @@ public class ClassConverter {
                 .views(classEntity.getViews())
                 .status("등록")
                 .imageUrl(classEntity.getImageUrl())
+                .language(classEntity.getLanguage())
+                .version(classEntity.getVersion())
+                .userId(userId)
                 .lectureList(lectureList)
                 .build();
+    }
+
+    public ClassDto toDto(ClassesEntity e, boolean isOwner) {
+        ClassDto dto = toDto(e);
+        if (dto != null) dto.setOwner(isOwner);
+        return dto;
     }
 } 

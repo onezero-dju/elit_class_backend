@@ -1,6 +1,7 @@
 package org.elitclass.api.domain.lecture.model;
 
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -30,6 +31,9 @@ public class LectureRequest {
 
     @NotBlank(message = "강의 내용은 필수 입력 사항입니다.")
     private String context;
-    
-    
+
+    @NotBlank(message = "IDE 여부는 필수 입력 사항입니다.")
+    @JsonProperty("is_ide")
+    @JsonAlias({"isIde"})               // 프론트가 isIde로 보내도 OK
+    private Boolean isIde;
 }

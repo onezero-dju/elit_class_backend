@@ -1,15 +1,22 @@
 package org.elitclass.api.api;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.elitclass.api.domain.classes.service.ClassService;
 import org.elitclass.api.error.ErrorCodeIfs;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Api<T> {
+
+    private ClassService classService;
     private Result result;
     @Valid
     private T body;
@@ -41,5 +48,10 @@ public class Api<T> {
         return api;
     }
 
+    @ApiResponse(responseCode = "200", description = "클래스 소유자 비교 성공")
+    @GetMapping("/class/{id}/isowner")
+    public Api<Boolean> isOwner(@PathVariable Long id, Authentication authentication) {
+        return Api.OK(classService.isOwner(authentication, id)); // body: true/false
+    }
 
 }

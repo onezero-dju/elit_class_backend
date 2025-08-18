@@ -15,4 +15,7 @@ public interface ClassRepository extends JpaRepository<ClassesEntity, Long> {
     List<LanguageVersionDTO> findLanguageVersionById(Long id);
     List<ClassesEntity> findTop5ByStatusOrderByLikeCountDescIdDesc(ClassStatus status);
     List<ClassesEntity> findTop3ByUser_RoleAndStatusOrderByLikeCountDescIdDesc(UserRole role, ClassStatus status);
+    List<ClassesEntity> findAllByUserId(Long userId);
+    boolean existsByIdAndUserId(Long id, Long userId);
+
 }

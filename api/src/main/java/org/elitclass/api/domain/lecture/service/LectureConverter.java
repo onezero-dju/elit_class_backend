@@ -22,6 +22,7 @@ public class LectureConverter {
                 .lectureTitle(e.getLectureTitle())
                 .context(e.getContext())
                 .pageList(pageList)
+                .isIde(e.getIsIde())
                 .classId(e.getClasses() != null ? e.getClasses().getId() : null) // ← 여기 중요
                 .build();
     }

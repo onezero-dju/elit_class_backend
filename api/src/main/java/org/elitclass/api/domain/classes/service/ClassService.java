@@ -1,5 +1,6 @@
 package org.elitclass.api.domain.classes.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.elitclass.api.domain.classes.model.ClassDto;
 import org.elitclass.api.domain.classes.model.ClassRequest;
@@ -120,10 +121,43 @@ public class ClassService {
         return list.stream().map(classConverter::toDto).toList();
     }
 
+    // 내가 만든 클래스 조회
+    public List<ClassDto> viewMine(Authentication authentication) {
+        UserEntity user = getAuthenticatedUser(authentication);
+
+        // 상태 필터를 원하면 아래 라인처럼 메서드 변경: findAllByUserAndStatusOrderByIdDesc(me, ClassStatus.REGISTERED)
+        List<ClassesEntity> list = classRepository.findAllByUserId(user.getId());
+
+        return list.stream()
+                .map(classConverter::toDto)
+                .collect(Collectors.toList());
+    }
+
+    // 👇 클래스 조회 + isOwner 계산
+    public boolean isOwner(Authentication authentication, Long classId) {
+        // 1) 현재 사용자 ID
+        UserEntity user = getAuthenticatedUser(authentication); // ← 이미 있는 헬퍼 사용
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated");
+        }
+        Long userId = user.getId();
+
+        // 2) 클래스 존재 여부 (404 분리)
+        if (!classRepository.existsById(classId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Class not found");
+        }
+
+        // 3) 소유자 여부 (가장 빠른 쿼리)
+        return classRepository.existsByIdAndUserId(classId, userId);
+        // 연관관계(@ManyToOne user)라면 ↓ 로 변경
+        // return classRepository.existsByIdAndUser_Id(classId, userId);
+    }
+}
+
     public List<ClassDto> adminList() {
         var list = classRepository
                 .findTop3ByUser_RoleAndStatusOrderByLikeCountDescIdDesc(
                         UserRole.ADMIN, ClassStatus.REGISTERED);
         return list.stream().map(classConverter::toDto).toList();
     }
-} 
+}
